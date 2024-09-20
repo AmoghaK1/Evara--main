@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evara - One for All</title>
+    <link rel="stylesheet" href="home.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="/Logo/evara-logo.svg">
+
+</head>
+<body>
+    <!-- <nav class="navbar sticky-top navbar-expand-lg" style="box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); backdrop-filter: blur(4px)">
+        <div class="container-fluid">
+             <!-- LOGO 
+             <a class="navbar-brand" href="#">
+                 <img src="G:\PROGRAMMING\EVARA\Navbar\Images\evara-logo_svg.svg" alt="evara-logo" class="evara-logo">
+             </a>
+             <!-- Hamburger Toggler 
+             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+             <span class="navbar-toggler-icon"></span>
+             </button> 
+             <!-- Text links 
+             <div class="collapse  navbar-collapse navbar-texts" id="navbarSupportedContent">
+             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                 <li class="nav-item">
+                 <a class="nav-link active" aria-current="page" href="#">Home</a>
+                 </li>
+                 <li class="nav-item">
+                     <a class="nav-link" href="#">Explore</a>
+                     </li>
+                 <li class="nav-item">
+                 <a class="nav-link" href="#">About</a>
+                 </li>
+                 <li class="nav-item">
+                     <a class="nav-link" href="#">Contact Us</a>
+                 </li>
+             </ul>
+             <!-- Icons and Sign up 
+             <i class="fa-regular fa-bell bell-icon"></i>
+             <a class="btn btn-light" href="G:\PROGRAMMING\EVARA\Login\login.html" role="button" style="font-size: 0.9rem; height: 2rem; transform: rotate(-0.61deg); transform-origin: 0 0; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 40px; backdrop-filter: blur(4px)">Login In</a>
+             </div>
+         </div>
+     </nav> -->
+
+
+     <nav class="navbar sticky-top navbar-expand-lg" style="box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
+        <div class="container-fluid">
+            <!-- LOGO -->
+            <a class="navbar-brand" href="#">
+                <img src="/Logo/evara-logo.svg" alt="evara-logo" class="evara-logo">
+            </a>
+            <!-- Hamburger Toggler -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Offcanvas Menu -->
+            <div class="offcanvas offcanvas-end" data-bs-scroll="true"  tabindex="-1" id="offcanvasNavbar">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title">Menu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <!-- Text links -->
+                    <ul class="navbar-nav mx-auto flex-grow-2 pe-3">
+                        <li class="nav-item ">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                       
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact Us</a>
+                        </li>
+                    </ul>
+                    <!-- Icons and Sign up -->
+                    <div class="d-flex align-items-center bellandlogin">
+                        <i class="fa-regular fa-bell bell-icon"></i>
+                        <a class="btn btn-light" href="/Login/login.html" role="button" style="font-size: 0.70rem; height: 2rem; transform: rotate(-0.61deg); transform-origin: 0 0; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 40px; backdrop-filter: blur(4px)">Login In</a>
+                        
+                        <a class="btn btn-light" href="/Sell/sell.html" role="button" style="font-size: 0.7rem; height: 2rem; transform: rotate(-0.61deg); transform-origin: 0 0; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 40px; backdrop-filter: blur(4px)">Sell</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- HEADER MAIN SEARCH AND SELECT -->
+    <div class="container-header-main ">
+        <div class="select-search-box">
+            <select class="form-select" aria-label="Default select example" style="width:25%; background-color: rgba(70, 68, 68, 0.062); border-color: rgb(162, 156, 156);">
+                <option selected>Select Location</option>
+                <option value="1">Location 1</option>
+                <option value="2">Location 2</option>
+                <option value="3">Location 3</option>
+                <option value="4">Location 4</option>
+                <option value="5">Location 5</option>
+              </select>
+            
+            <form class="d-flex" role="search" style=" width: 60%;">
+            <input class="form-control me-2" type="search" placeholder="Ex. Calculators" aria-label="Search" style=" width: 75%; background-color: rgba(70, 68, 68, 0.062); border-color: rgb(162, 156, 156);">
+            <button class="go-button go-type1">
+                <span class="go-btn-txt">Go!</span>
+              </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- CATEGORIES CIRCLES -->
+    <div class="container-lg">
+        
+        <div class="cat-card-group">
+            <div class="cat-card">
+                <a href="#" class="cat-card-linker">
+                    <div class="cat-card-img-box">
+                        <img src="/ImagesHome/calculator2.png" alt="calculators" class="cat-card-img"><br>
+
+                    </div>
+                <div class="cat-card-textbox">
+                    <p class="cat-card-text">Calculators</p>
+                </div>
+                </a>
+                
+            </div>
+            <div class="cat-card">
+                <a href="#" class="cat-card-linker">
+                    <div class="cat-card-img-box">
+                        <img src="/ImagesHome/bags.png"alt="bags" class="cat-card-img"><br>
+                    </div>
+                <div class="cat-card-textbox">
+                    <p class="cat-card-text">Bags</p>
+                </div>
+                </a>
+                
+            </div>
+            <div class="cat-card">
+                <a href="#" class="cat-card-linker">
+                    <div class="cat-card-img-box">
+                        <img src="/ImagesHome/electronics.png"alt="electronics" class="cat-card-img"><br>
+                    </div>
+                <div class="cat-card-textbox">
+                    <p class="cat-card-text">Electronics</p>
+                </div>
+                </a>
+                
+            </div>
+            <div class="cat-card" >
+                <a href="#" class="cat-card-linker">
+                    <div class="cat-card-img-box">
+                        <img src="/ImagesHome/books.png" alt="books"class="cat-card-img"><br>
+                    </div>
+                <div class="cat-card-textbox">
+                    <p class="cat-card-text">Books</p>
+                </div>
+                </a>
+                
+            </div>
+            <div class="cat-card">
+                <a href="#" class="cat-card-linker">
+                    <div class="cat-card-img-box">
+                        <img src="/ImagesHome/hostel-decor.png" alt="Hostel Amenities" class="cat-card-img"><br>
+                    </div>
+                <div class="cat-card-textbox">
+                    <p class="cat-card-text">Hostel Amenities</p>
+                </div>
+                </a>
+                
+            </div>
+            <div class="cat-card">
+                <a href="#" class="cat-card-linker">
+                    <div class="cat-card-img-box">
+                        <img src="/ImagesHome/paints.png" alt="paints" class="cat-card-img"><br>
+                    </div>
+                    <div class="cat-card-textbox">
+                        <p class="cat-card-text">Paints</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FRESH RECOMMENDATION SECTION -->
+
+    <div class="container-lg">
+        <p class="fr-text">Fresh<br>Recommendations</p><br>
+    </div>
+
+    <!-- TEMPLATE FOR ITEMS -->
+    
+      <div id="items-container" class="grid-container"></div>
+    
+    
+
+   <!-- FOOTER -->
+    
+    
+  
+
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="home.js"></script>
+</html>

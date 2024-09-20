@@ -1,0 +1,89 @@
+/* Global Styles */
+body {
+    background-color: #fff0f5; /* Light lavender background for a soft look */
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
+  }
+  
+  /* Container Styles */
+  .container {
+    width: 90%;
+    max-width: 700px;
+    padding: 40px 30px;
+    margin: 60px auto;
+    border: 1px solid #ff76a1;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: 90%;
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Container Hover Effect */
+  .container:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Header Styles */
+  h2 {
+    font-size: 26px;
+    margin-bottom: 25px;
+    color: #e75480; /* Soft pink header color */
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+  }
+  
+  /* Payment Methods Container */
+  .payment-methods {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Ensure container takes full width */
+  }
+  
+  /* Individual Payment Method Button */
+  .payment-method {
+    width: 300px; /* Fixed width for all buttons */
+    height: 60px; /* Fixed height for all buttons */
+    padding: 0; /* Remove extra padding to fit height */
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #fff;
+    background: linear-gradient(to right, #e75480, #ff99aa); /* Gradient from pink to lighter pink */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 60px; /* Vertically centers text */
+    transition: background 0.3s ease, transform 0.2s ease;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Hover Effect for Payment Methods */
+  .payment-method:hover {
+    background: linear-gradient(to right, #ff99aa, #e75480);
+    transform: translateY(-2px);
+  }
+  
+  .payment-method:active {
+    background: #d14772;
+  }
+  
+  /* Link Styles */
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  

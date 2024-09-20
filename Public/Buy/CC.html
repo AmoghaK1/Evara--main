@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="weblogo.png">
+    <title>Credit Card Payment</title>
+    <link rel="stylesheet" href="CC.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Credit Card Payment</h2>
+        <div class="payment-details">
+            <p>To proceed with Credit Card payment, please enter your card details below:</p>
+            <form action="#" method="POST">
+                <label for="card-number" class="form-label">Card Number:</label>
+                <input type="text" id="card-number" name="card-number" class="form-control" placeholder="Enter your card number" required>
+
+                <label for="expiry-date" class="form-label">Expiry Date:</label>
+                <input type="text" id="expiry-date" name="expiry-date" class="form-control" placeholder="MM/YY" required>
+
+                <label for="cvv" class="form-label">CVV:</label>
+                <input type="text" id="cvv" name="cvv" class="form-control" placeholder="Enter CVV" required>
+
+                <button type="submit" class="btn-primary">Submit Payment</button>
+            </form>
+        </div>
+        <footer>
+            <a href="Payment.html">Back to Payment Methods</a>
+        </footer>
+    </div>
+</body>
+</html>
