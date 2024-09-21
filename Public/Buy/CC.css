@@ -1,116 +1,115 @@
 /* Global Styles */
 body {
-    background-color: #fff0f5; /* Light lavender background for a soft look */
-    font-family: 'Arial', sans-serif;
-    color: #333;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    box-sizing: border-box;
-  }
-  
-  /* Container Styles */
-  .container {
-    width: 90%;
-    max-width: 700px;
-    padding: 40px 30px;
-    margin: 60px auto;
-    border: 1px solid #e0e0e0;
-    border-radius: 15px;
-    background-color: #fff;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
-    max-height: 90%;
-    transition: box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  /* Container Hover Effect */
-  .container:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  }
-  
-  /* Header Styles */
-  h2 {
-    font-size: 26px;
-    margin-bottom: 25px;
-    color: #e75480; /* Soft pink header color */
-    font-family: 'Arial', sans-serif;
-    text-align: center;
-  }
-  
-  /* Payment Details Styles */
-  .payment-details {
-    width: 100%;
-  }
-  
-  .form-label {
-    font-size: 15px;
-    font-weight: 600;
-    color: #444;
-    margin-bottom: 5px;
-    display: block;
-  }
-  
-  .form-control {
-    padding: 12px;
-    border-radius: 6px;
-    border: 1px solid #d1d1d1;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: border-color 0.3s ease;
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 15px;
-  }
-  
-  .form-control:focus {
-    border-color: #e75480;
-    outline: none;
-    box-shadow: 0 0 5px rgba(231, 84, 128, 0.2);
-  }
-  
-  textarea.form-control {
-    resize: none;
-    height: 100px;
-  }
-  
-  .btn-primary {
-    background: #e75480;
-    border: none;
-    padding: 12px;
-    font-weight: 700;
-    border-radius: 6px;
-    color: #fff;
-    cursor: pointer;
-    width: 100%;
-    transition: background 0.3s ease, transform 0.2s ease;
-  }
-  
-  .btn-primary:hover {
-    background: #d14772;
-  }
-  
-  .btn-primary:active {
-    background: #b93b64;
-  }
-  
-  footer {
-    margin-top: 20px;
-    font-size: 13px;
-    color: #666;
-  }
-  
-  footer a {
-    color: #e75480;
-    text-decoration: none;
-  }
-  
-  footer a:hover {
-    text-decoration: underline;
-  }
-  
+  background-color: #8e71907d; /* Updated background color */
+  font-family: 'Arial', sans-serif;
+  color: #2b252c; /* Updated text color */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Container Styles */
+.container {
+  width: 90%;
+  max-width: 700px;
+  padding: 40px 30px;
+  margin: 60px auto;
+  border: 1px solid #3B353C; /* Updated border color */
+  border-radius: 15px;
+  background-color: #2B252C; /* Updated container background color */
+  box-shadow: 0 6px 12px rgba(192, 192, 192, 0.35); /* Updated box shadow */
+  overflow-y: auto;
+  max-height: 90%;
+  transition: box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Container Hover Effect */
+.container:hover {
+  box-shadow: 0 8px 16px rgba(192, 192, 192, 0.35); /* Updated hover shadow */
+}
+
+/* Header Styles */
+h2 {
+  font-size: 26px;
+  margin-bottom: 25px;
+  color: #ef8376; /* Updated header color */
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+}
+
+/* Payment Details Styles */
+.payment-details {
+  width: 100%;
+}
+
+.form-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #555; /* Updated label color */
+  margin-bottom: 5px;
+  display: block;
+}
+
+.form-control {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #3B353C; /* Updated input border color */
+  box-shadow: inset 0 2px 4px rgba(128, 128, 128, 0.05); /* Updated inset shadow */
+  transition: border-color 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+}
+
+.form-control:focus {
+  border-color: #ef8376; /* Updated focus border color */
+  outline: none;
+  box-shadow: 0 0 5px rgba(239, 131, 118, 0.75); /* Updated focus shadow */
+}
+
+textarea.form-control {
+  resize: none;
+  height: 100px;
+}
+
+.btn-primary {
+  background: #ef8376; /* Updated button background color */
+  border: none;
+  padding: 12px;
+  font-weight: 700;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #df7366; /* Updated button hover color */
+}
+
+.btn-primary:active {
+  background: #1C0920; /* Updated button active color */
+}
+
+footer {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #555; /* Updated footer color */
+}
+
+footer a {
+  color: #ef8376; /* Updated footer link color */
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
