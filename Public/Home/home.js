@@ -11,7 +11,7 @@ fetch('http://localhost:3000/api/products')
            <img src="${item.product_image}" alt="${item.product_name}" />  
             <h3>${item.product_name}</h3>
             <p class="item-description">
-             ${item.short_description}...<a href="/details/product-details.html?id=${item.id}" class="read-more">Read more</a>
+             ${item.short_description}...<a href="/details/product-details.html?id=${item.productID}" class="read-more">Read more</a>
             </p>
 
             <p>Price: ${item.price}</p>

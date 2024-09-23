@@ -39,7 +39,7 @@ app.get('/api/products', (req, res) => {
 // API to get a specific item by ID
 app.get('/api/products/:id', (req, res) => {
   console.log(`Fetching item with ID: ${req.params.id}`);  // Log the ID
-  const query = 'SELECT * FROM products WHERE id = ?';
+  const query = 'SELECT * FROM products WHERE productID = ?';
   db.query(query, [req.params.id], (err, results) => {
     if (err) {
       console.error('Database query failed:', err);
