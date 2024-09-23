@@ -26,8 +26,8 @@ db.connect((err) => {
 });
 
 // API to get all items
-app.get('/api/items', (req, res) => {
-  const query = 'SELECT id, title, LEFT(description, 20) AS short_description, price, location, status, image_url FROM items';
+app.get('/api/products', (req, res) => {
+  const query = 'SELECT productID, product_name, product_category, LEFT(product_desc, 20) AS short_description, price, location, status, product_image FROM products';
   db.query(query, (err, results) => {
     if (err) {
       return res.status(500).json({ error: 'Database query failed' });
@@ -37,9 +37,9 @@ app.get('/api/items', (req, res) => {
 });
 
 // API to get a specific item by ID
-app.get('/api/items/:id', (req, res) => {
+app.get('/api/products/:id', (req, res) => {
   console.log(`Fetching item with ID: ${req.params.id}`);  // Log the ID
-  const query = 'SELECT * FROM items WHERE id = ?';
+  const query = 'SELECT * FROM products WHERE id = ?';
   db.query(query, [req.params.id], (err, results) => {
     if (err) {
       console.error('Database query failed:', err);
