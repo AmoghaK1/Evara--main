@@ -55,18 +55,16 @@ app.get('/Home/home-live.html', (req,res) => {
 
 
 app.post('/SELL', (req,res) => {
-  let userName = req.body.sellername;
-  let number = req.body.sellernum;
   let prodName = req.body.productName;
   let prodCat = req.body.productCategory;
   let price = req.body.price;
   let location = req.body.location;
   let prodDetail = req.body.productDetail;
-  let imgPath = req.body.img1;
+  let img = req.body.img1;
 
-  let sql = `INSERT INTO items (title, description, price, category, image_url, location) VALUES (?,?,?,?,?,?)`;
+  let sql = `INSERT INTO products (product_name, product_category, price, product_desc, location) VALUES (?,?,?,?,?)`;
 
-  let query = db.query(sql, [prodName, prodDetail, price,prodCat, imgPath, location], (err,result) => {
+  let query = db.query(sql, [prodName, prodCat, price, prodDetail, location], (err,result) => {
     if (err) throw err;
     console.log("Product added to Database..");
     
