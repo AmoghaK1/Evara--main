@@ -2,6 +2,12 @@ const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const multer = require('multer')
+const { Buffer } = require('buffer');
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
 
 const app = express();
 app.use(bodyParser.json());
@@ -46,6 +52,7 @@ app.get('/api/products/:id', (req, res) => {
       return res.status(500).json({ error: 'Database query failed' });
     }
     res.json(results);
+    
   });
 });
 
@@ -54,17 +61,17 @@ app.get('/Home/home-live.html', (req,res) => {
 });
 
 
-app.post('/SELL', (req,res) => {
+app.post('/SELL',upload.single('image'), (req,res) => {
   let prodName = req.body.productName;
   let prodCat = req.body.productCategory;
   let price = req.body.price;
   let location = req.body.location;
   let prodDetail = req.body.productDetail;
-  let img = req.body.img1;
+  const imageBlob = req.file.buffer;
 
-  let sql = `INSERT INTO products (product_name, product_category, price, product_desc, location) VALUES (?,?,?,?,?)`;
+  let sql = `INSERT INTO products (product_name, product_category, price, product_desc, product_image, location) VALUES (?,?,?,?,?,?)`;
 
-  let query = db.query(sql, [prodName, prodCat, price, prodDetail, location], (err,result) => {
+  let query = db.query(sql, [prodName, prodCat, price, prodDetail, imageBlob, location], (err,result) => {
     if (err) throw err;
     console.log("Product added to Database..");
     

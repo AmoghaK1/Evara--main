@@ -17,7 +17,7 @@
             <img src="/Logo/evara-logo.svg" alt="Logo" class="img-fluid">
         </div>
         <h2 class="text-center mb-4">Sell a Product</h2>
-        <form id="sellForm" class="content__form" method="post" action="/SELL">
+        <form id="sellForm" class="content__form" method="post" action="/SELL" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="productName" class="form-label">Product Name:</label>
                 <input type="text" id="productName" name="productName" class="form-control" required>
@@ -39,8 +39,8 @@
                 <textarea id="productDetail" name="productDetail" class="form-control" rows="3" required></textarea>
             </div>
             <div class="mb-3">
-                <label for="img1" class="form-label">Image 1 URL:</label>
-                <input type="file" id="img1" name="img1" class="form-control" required>
+                <label for="img1" class="form-label" >Upload your product image:</label>
+                <input type="file" id="image" name="image" class="form-control"accept="image/*" required>
             </div>
             <button type="submit" class="btn btn-primary w-100">Post</button>
         </form>

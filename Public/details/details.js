@@ -7,15 +7,18 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(data => {
       if (data.length > 0) {
         const item = data[0];  
+        console.log(item.product_image);
         const productDetails = document.getElementById('product-details');
-        productDetails.innerHTML = `
+          productDetails.innerHTML = `
           <h2>${item.product_name}</h2>
-          <img src="${item.product_image}" class="prod-img">
+          
           <p>${item.product_desc}</p>
           <p>Price: ${item.price}</p>
           <p>Location: ${item.location}</p>
           <p>Status: ${item.status}</p>
         `;
+        
+        
       } else {
         // Handle case when no data is returned
         productDetails.innerHTML = '<p>Item not found</p>';
