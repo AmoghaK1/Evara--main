@@ -17,18 +17,18 @@
       <div class="Evara_login">
       <h3>Welcome Back!</h3>
       </div>
-      <form class="content__form">
+      <form class="content__form" action="/login" method="post">
         <div class="content__inputs">
           <label>
-            <input required="" type="text">
-            <span>Phone number, username, or email</span>
+            <input required="" type="text", id="identifier", name="identifier" >
+            <span>Username / Email / Phone Number</span>
           </label>
           <label>
-            <input required type="password">
+            <input required type="password" id="password", name="password">
             <span>Password</span>
           </label>
         </div>
-        <button>Log In</button>
+        <button type="submit">Log In</button>
       </form>
       <div class="content__or-text">
         <span></span>
