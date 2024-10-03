@@ -162,7 +162,7 @@ app.get('/session', (req, res) => {
           profilePicture: results[0].profile_picture || '/default-pfp.png' // Provide default profile picture if none exists
           
         });
-        console.log("Pfp should come")
+        
       }
     });
   } else {
