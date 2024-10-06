@@ -22,10 +22,10 @@ const server = http.createServer(app);
 const io = socketIo(server);
 
 app.use(session({
-  secret: 'secret-key',
+  secret: 'ABCXYZ123',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true } // Set 'true' if using https
+  cookie: { secure: false } // Set 'true' if using https
 }));
 
 
@@ -47,6 +47,12 @@ db.connect((err) => {
 
 // API to get all items
 app.get('/api/products', (req, res) => {
+  if (req.session.userID) {
+    console.log(`User ID from session: ${req.session.userID}`);
+    console.log(`Logged in as user: ${req.session.userID}`);
+  } else {
+    console.log('No user has logged in');
+  }
   const query = 'SELECT productID, product_name, product_category, LEFT(product_desc, 20) AS short_description, price, location, status, product_image FROM products';
   db.query(query, (err, results) => {
     if (err) {
@@ -114,7 +120,12 @@ app.post('/register', async (req, res) => {
           throw err;
         }
         console.log("A user has registered..")
-        res.redirect('/Home/home-live.html?status=registered');
+        req.session.save(err => {
+          if (err) {
+            console.error('Error saving session:', err);
+          }
+          res.redirect(`/Home/home-live.html?status=registered`);
+        });
       });
     });
   } catch (err) {
@@ -140,9 +151,15 @@ app.post('/login', (req, res) => {
 
         if (match) {
           // Store userId in session
-          req.session.userId = user.userID;
-          console.log("A user has Logged in..")
-          res.redirect(`/Home/home-live.html?status=loggedin&user=${user.username}`);
+          
+          req.session.userID = user.userID;
+          console.log(`User ${user.userID} has Logged in..`)
+          req.session.save(err => {
+            if (err) {
+              console.error('Error saving session:', err);
+            }
+            res.redirect(`/Home/home-live.html?status=loggedin&user=${user.username}`);
+          });
         } else {
           res.send('Invalid email/username/phone number or password');
         }
@@ -155,6 +172,7 @@ app.post('/login', (req, res) => {
 
 
 app.get('/session', (req, res) => {
+  console.log(req.session.userID);
   if (req.session.userID) {
     // Fetch user data to get the profile picture (assuming you store profile picture URL in the database)
     db.query('SELECT profile_picture FROM users WHERE userID = ?', [req.session.userID], (err, results) => {
@@ -187,10 +205,14 @@ app.get('/send-notification', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('A user connected');
+  console.log('a user connected');
   socket.on('disconnect', () => {
-      console.log('A user disconnected');
+      console.log('user disconnected');
   });
+});
+
+server.listen(4000, () => {
+  console.log('listening on *:4000');
 });
   
 // Start the server
