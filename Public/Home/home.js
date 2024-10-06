@@ -23,8 +23,42 @@
         `;
       }
     });
-};
+}; 
+const socket = io();
+        const notificationBell = document.getElementById('notificationBell');
+        const notificationCount = document.getElementById('notificationCount');
+        const notificationList = document.getElementById('notificationList');
+        const notifications = document.getElementById('notifications');
 
+        let unreadCount = 0;
+
+        // Toggle notification list when bell is clicked
+        notificationBell.addEventListener('click', function() {
+            notificationList.classList.toggle('show');
+            unreadCount = 0;
+            notificationCount.innerText = unreadCount;
+        });
+
+        // Listen for initial notifications when user connects
+        socket.on('initial-notifications', function(data) {
+            data.forEach(notification => {
+                addNotificationToList(notification);
+            });
+        });
+
+        // Listen for real-time notifications
+        socket.on('notification', function(notification) {
+            addNotificationToList(notification);
+            unreadCount++;
+            notificationCount.innerText = unreadCount;
+        });
+
+        // Helper function to add notifications to the list
+        function addNotificationToList(notification) {
+            const newNotification = document.createElement('li');
+            newNotification.innerText = `${notification.title}: ${notification.body} (${notification.timestamp})`;
+            notifications.appendChild(newNotification);
+        }
 
 window.onload = function() {
   const urlParams = new URLSearchParams(window.location.search);
