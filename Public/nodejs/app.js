@@ -6,6 +6,8 @@ const session = require('express-session');
 const multer = require('multer')
 const { Buffer } = require('buffer');
 const bcrypt = require('bcrypt');
+const http = require('http');
+const socketIo = require('socket.io');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -16,6 +18,8 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
+const server = http.createServer(app);
+const io = socketIo(server);
 
 app.use(session({
   secret: 'secret-key',
@@ -29,7 +33,7 @@ app.use(session({
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',       // Replace with your MySQL username
-  password: 'Amogha123', // Replace with your MySQL password
+  password: 'kavya22311220@', // Replace with your MySQL password
   database: 'evaradb'
 });
 
@@ -169,6 +173,24 @@ app.get('/session', (req, res) => {
     res.json({ loggedIn: false });
     console.log("No one logged in...")
   }
+});
+
+app.get('/send-notification', (req, res) => {
+  const notification = {
+      title: "New Notification",
+      body: "You have a new notification",
+      timestamp: new Date().toLocaleString()
+  };
+
+  io.emit('notification', notification);
+  res.send("Notification sent!");
+});
+
+io.on('connection', (socket) => {
+  console.log('A user connected');
+  socket.on('disconnect', () => {
+      console.log('A user disconnected');
+  });
 });
   
 // Start the server
