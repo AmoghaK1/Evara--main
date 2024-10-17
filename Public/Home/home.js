@@ -65,7 +65,7 @@ fetch('http://localhost:3000/api/products')
 
           // Populate each item div with item data
           itemDiv.innerHTML = `
-           <img src="${item.product_image}" alt="${item.product_name}" />  
+            <img src="${item.product_image}" alt="Product Image"> 
             <h3>${item.product_name}</h3>
             <p class="item-description">
              ${item.short_description}...<a href="/details/product-details.html?id=${item.productID}" class="read-more">Read more</a>

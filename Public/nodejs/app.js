@@ -3,15 +3,14 @@ const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
-const multer = require('multer')
 const { Buffer } = require('buffer');
 const bcrypt = require('bcrypt');
 const http = require('http');
 const socketIo = require('socket.io');
-
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-
+require('dotenv').config();
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const multer = require('multer');
 
 const app = express();
 app.use(bodyParser.json());
@@ -79,26 +78,47 @@ app.get('/api/products/:id', (req, res) => {
 app.get('/Home/home-live.html', (req,res) => {
   
 });
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
+// Set up Multer storage with Cloudinary
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+      folder: 'evara_userImages',  // Specify folder in Cloudinary
+      allowedFormats: ['jpeg', 'png', 'jpg']
+  }
+});
 
-app.post('/SELL',upload.single('image'), (req,res) => {
+// Initialize Multer
+const upload = multer({ storage });
+app.post('/SELL', upload.single('image'), (req, res) => {
+  // Retrieve the product details from the form
   let prodName = req.body.productName;
   let prodCat = req.body.productCategory;
   let price = req.body.price;
   let location = req.body.location;
   let prodDetail = req.body.productDetail;
-  const imageBlob = req.file.buffer;
 
+  // Cloudinary will automatically store the image and return the URL in req.file.path
+  const imageUrl = req.file.path; // This is the URL of the uploaded image
+
+  // Insert the product details along with the image URL into the database
   let sql = `INSERT INTO products (product_name, product_category, price, product_desc, product_image, location) VALUES (?,?,?,?,?,?)`;
 
-  let query = db.query(sql, [prodName, prodCat, price, prodDetail, imageBlob, location], (err,result) => {
+  db.query(sql, [prodName, prodCat, price, prodDetail, imageUrl, location], (err, result) => {
     if (err) throw err;
-    console.log("Product added to Database..");
+    console.log("Product added to Database with Cloudinary image URL.");
     
+    // Redirect to the homepage or confirmation page after the product is added
     res.redirect('/Home/home-live.html');
   });
-  
 });
+
+
 
 
 
@@ -210,6 +230,8 @@ io.on('connection', (socket) => {
       console.log('user disconnected');
   });
 });
+
+
 
 server.listen(4000, () => {
   console.log('listening on *:4000');
