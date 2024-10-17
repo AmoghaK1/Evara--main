@@ -99,8 +99,8 @@
     </nav>
     <!-- HEADER MAIN SEARCH AND SELECT -->
     <div class="container-header-main ">
-        <div class="select-search-box">
-            <select class="form-select" aria-label="Default select example" style="width:25%; background-color: rgba(70, 68, 68, 0.062); border-color: rgb(162, 156, 156);">
+        <div class="select-search-box" id="search-form">
+            <!-- <select class="form-select" aria-label="Default select example" style="width:25%; background-color: rgba(70, 68, 68, 0.062); border-color: rgb(162, 156, 156);">
                 <option selected>Select Location</option>
                 <option value="1">Location 1</option>
                 <option value="2">Location 2</option>
@@ -114,7 +114,22 @@
             <button class="go-button go-type1">
                 <span class="go-btn-txt">Go!</span>
               </button>
-            </form>
+            </form> -->
+
+            
+            <div>
+                <input type="text" id="locationInput" placeholder="Enter location" />
+                <ul id="locationSuggestions"></ul>
+              </div>
+              
+              <div>
+                <input type="text" id="itemInput" placeholder="Enter item name" />
+                <ul id="itemSuggestions"></ul>
+              </div>
+              
+              <button onclick="searchItems()">Search</button>
+              
+              <div id="results"></div>
         </div>
     </div>
     

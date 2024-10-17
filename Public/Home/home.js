@@ -115,3 +115,68 @@ fetch('http://localhost:3000/api/products')
           newNotification.innerText = `${notification.title}: ${notification.body} (${notification.timestamp})`;
           notifications.appendChild(newNotification);
       }
+
+//location search option
+
+      document.getElementById('locationInput').addEventListener('input', function () {
+        const query = this.value;
+        if (query.length > 2) {
+            fetch(`/api/suggest/location?q=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    const suggestions = document.getElementById('locationSuggestions');
+                    suggestions.innerHTML = '';  // Clear previous suggestions
+                    data.forEach(suggestion => {
+                        const li = document.createElement('li');
+                        li.textContent = suggestion.location;
+                        li.addEventListener('click', function () {
+                            document.getElementById('locationInput').value = suggestion.location;
+                            suggestions.innerHTML = '';  // Clear suggestions after selection
+                        });
+                        suggestions.appendChild(li);
+                    });
+                });
+        }
+    });
+    
+    document.getElementById('itemInput').addEventListener('input', function () {
+        const query = this.value;
+        if (query.length > 2) {
+            fetch(`/api/suggest/item?q=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    const suggestions = document.getElementById('itemSuggestions');
+                    suggestions.innerHTML = '';  // Clear previous suggestions
+                    data.forEach(suggestion => {
+                        const li = document.createElement('li');
+                        li.textContent = suggestion.name;
+                        li.addEventListener('click', function () {
+                            document.getElementById('itemInput').value = suggestion.name;
+                            suggestions.innerHTML = '';  // Clear suggestions after selection
+                        });
+                        suggestions.appendChild(li);
+                    });
+                });
+        }
+    });
+    
+    function searchItems() {
+        const location = document.getElementById('locationInput').value;
+        const name = document.getElementById('itemInput').value;
+        
+        fetch(`/api/search?location=${location}&name=${name}`)
+            .then(response => response.json())
+            .then(data => {
+                const resultsDiv = document.getElementById('results');
+                resultsDiv.innerHTML = '';  // Clear previous results
+                data.forEach(item => {
+                    const div = document.createElement('div');
+                    div.innerHTML = `
+                        <h3>${item.name}</h3>
+                        <p>Location: ${item.location}</p>
+                        <p>Price: $${item.price}</p>
+                    `;
+                    resultsDiv.appendChild(div);
+                });
+            });
+    }
