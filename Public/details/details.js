@@ -7,9 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(data => {
       if (data.length > 0) {
         const item = data[0];  
-        console.log(item.product_image);
+        
         const productDetails = document.getElementById('product-details');
           productDetails.innerHTML = `
+          <img src="${item.product_image}" alt="Product image">
           <h2>${item.product_name}</h2>
           
           <p>${item.product_desc}</p>
