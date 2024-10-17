@@ -1,0 +1,413 @@
+/*s.body1{
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  color: rgb(0, 0, 0);
+}
+
+.Logo img{
+  width:auto;
+  max-height:70px;
+} 
+
+.navbar1 {
+  background-color: #f3c5d2;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgb(0, 0, 0);
+}
+
+.navbar-nav1 {
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  color: rgb(0, 0, 0);
+}
+
+.nav-item1 {
+  list-style-type: none;
+  margin: 0 10px;
+}
+
+.nav-link1 {
+  text-decoration: none;
+  padding: 35px 100px;
+  transition: background-color 0.3s ease;
+  color: rgb(0, 0, 0);
+}
+
+.nav-link1:hover {
+  color: #f679a4;
+}
+
+.btn1 {
+  background-color: #801244;
+  border-radius: 20px;
+  padding: 5px 15px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.btn1:hover{
+  background-color: #f679a4;
+}
+
+.bi-bell {
+  transition: color 0.3s ease;
+  margin-right: 10px; 
+}
+
+.bi-bell:hover {
+  color:#f679a4;
+}
+*/
+
+
+
+@media (min-width: 1460px) and (max-width:1038px ) {
+    .text {
+      margin-bottom: 0.5rem;
+    }
+  }
+  
+  @media (min-width: 1037px) and (max-width:816px) {
+    .text {
+      margin-bottom: 0.5rem;
+    }
+  }
+  
+  @media (min-width: 815px) and (max-width:600px) {
+    .text {
+      margin-bottom: 0.5rem;
+    }
+  }
+  
+  @media (min-width: 599px) and (max-width:410px) {
+    .text {
+      margin-bottom: 0.5rem;
+    }
+  }
+  
+  @media (max-width:409px) {
+    .text {
+      margin-bottom: 0.5rem;
+    }
+  }
+  
+  .row{
+    margin-top: 5px;
+    color: black;
+  }
+  
+  .col{
+    text-align: center;
+    text-transform:capitalize;
+    color:rgb(0, 0, 0);
+  }
+  
+  .bg {
+    background-image: url('assets/bg2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    position: relative;
+  }
+  
+  .overlay {
+    background-color: rgba(113, 113, 113, 0.5);
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .overlay h1, .overlay p {
+    color: white;
+    margin: 0;
+    padding: 10px 0;
+  }
+  
+  
+  .bg h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  }
+  
+  .text{
+    font-size: 1rem;
+    color: rgb(255, 255, 255);
+    text-shadow: 2px 2px 4px rgba(36, 36, 36, 0.7);
+  }
+  
+  .text b{
+    color: #ffffff;
+    font-size: 1rem;
+    text-align: justify;
+  }
+  
+  .footer {
+    height: 250px;
+    background-color: rgba(102, 102, 102, 0.933);
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .container {
+    color: #ffffff;
+  }
+  
+  /* Responsive adjustments for the footer */
+  @media (max-width: 992px) {
+    .footer {
+      padding: 15px;
+      height: auto;
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .footer {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .footer {
+      font-size: 1rem;
+      
+    }
+  }
+  
+  
+  /* Responsive adjustments for the navbar */
+  @media (max-width: 992px) {
+  .navbar-texts {
+      padding-left: 0;
+      text-align: center;
+  }
+  
+  .nav-item {
+      margin: 0.5rem 0;
+  }
+  
+  .btn {
+      margin-right: 0;
+      width: 100%;
+      margin-top: 10px;
+  }
+  
+  .bell-icon {
+      margin-right: 0;
+  }
+  }
+  
+  @media (max-width: 768px) {
+  .navbar {
+      height: auto;
+  }
+  
+  .evara-logo {
+      height: 1.5em;
+  }
+  
+  .signup-btn {
+      width: 100%;
+      margin-top: 10px;
+  }
+  }
+  
+  @media (max-width: 576px) {
+  .nav-item {
+      margin: 0.3rem 0;
+  }
+  
+  .navbar-texts {
+      margin-top: 10px;
+  }
+  }
+  
+  .footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: rgba(102, 102, 102, 0.933);
+    color: #ffffff;
+    text-decoration: none;
+  }
+  
+  .footer .footer-section {
+    flex: 1;
+    margin: 10px;
+    min-width: 200px; /* Ensure items don't get too narrow */
+  }
+  
+  .footer .footer-section h4 {
+    margin-bottom: 15px;
+    font-size: 18px;
+  }
+  
+  .footer .footer-section p, 
+  .footer .footer-section a {
+    margin: 5px 0;
+    color: #ffffff;
+    text-decoration: none;
+  }
+  
+  .footer .footer-section a:hover {
+    color: #f679a4;
+  }
+  
+  .footer .copyright {
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  
+  
+  /* Responsive adjustments for the About Us section */
+  @media (max-width: 992px) {
+  .bg h1 {
+      font-size: 2rem;
+  }
+  
+  .text {
+      font-size: 1rem;
+  }
+  
+  .overlay h1,
+  .overlay p {
+      padding: 5px 0;
+  }
+  
+  .text b {
+      font-size: 1.3rem;
+  }
+  }
+  
+  @media (max-width: 768px) {
+  .bg {
+      padding: 20px;
+      height: auto;
+  }
+  
+  .text {
+      font-size: 1rem;
+  }
+  
+  .overlay {
+      padding: 15px;
+  }
+  
+  .overlay h1 {
+      font-size: 2rem;
+  }
+  
+  .text b {
+      font-size: 1.1rem;
+  }
+  }
+  
+  @media (max-width: 576px) {
+  .text {
+      font-size: 0.9rem;
+  }
+  
+  .overlay {
+      padding: 10px;
+  }
+  
+  .bg h1 {
+      font-size: 1.5rem;
+  }
+  
+  .text b {
+      font-size: 1rem;
+  }
+  }
+  
+  
+  /*HOME.CSS
+  ftdhsjkmcdbcbvfd;k
+  vnuehfrvuierhiughriu
+  fnerfiuhriuhie*/
+  
+  .evara-logo {
+    height: 1.95em;
+    width: auto;
+    margin-left: 0.4rem;
+  }    
+  
+  .navbar {
+    background-color: rgba(252,186,210,47%);
+    height: 3.5rem;
+  
+  }
+  .btn {
+    margin-right: 5%;
+    width: 8rem;
+    background-color: white;
+    color: black;
+  }
+  
+  .bell-icon {
+    color: rgb(85, 83, 83);
+    font-size: 1.5rem;
+    font-weight: 200;
+    margin-right: 4%;
+  } 
+  
+  .nav-item {
+    margin: 0rem 2.5rem;
+  }
+  
+  .navbar-texts {
+    padding-left: 5rem;
+  }
+  
+  .signup-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #7e97b8;
+    background-color: #e0e8ef;
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+    border-color: rgba(255, 255, 255, 0.333);
+    border-radius: 40px 40px 40px 40px;
+    padding: 16px 24px 16px 28px;
+    transform: translate(0px, 0px) rotate(0deg);
+    transition: 0.2s;
+    box-shadow: -4px -2px 16px 0px #ffffff, 4px 2px 16px 0px rgb(95 157 231 / 48%);
+   }
+   
+   .signup-btn:hover {
+    color: #516d91;
+    background-color: #E5EDF5;
+    box-shadow: -2px -1px 8px 0px #ffffff, 2px 1px 8px 0px rgb(95 157 231 / 48%);
+   }
+   
+   .signup-btn:active {
+    box-shadow: none;
+   }
