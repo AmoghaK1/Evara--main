@@ -118,38 +118,38 @@ app.post('/SELL', upload.single('image'), (req, res) => {
   });
 });
 
-app.get('/api/suggest/location', (req, res) => {
-  const query = req.query.q.toLowerCase();
-  const locations = products
-      .map(p => p.location)
-      .filter(loc => loc.toLowerCase().includes(query));
+// app.get('/api/suggest/location', (req, res) => {
+//   const query = req.query.q.toLowerCase();
+//   const locations = products
+//       .map(p => p.location)
+//       .filter(loc => loc.toLowerCase().includes(query));
 
-  const uniqueLocations = [...new Set(locations)];  // Remove duplicates
-  res.json(uniqueLocations.map(loc => ({ location: loc })));
-});
+//   const uniqueLocations = [...new Set(locations)];  // Remove duplicates
+//   res.json(uniqueLocations.map(loc => ({ location: loc })));
+// });
 
-// Suggest item endpoint
-app.get('/api/suggest/item', (req, res) => {
-  const query = req.query.q.toLowerCase();
-  const items = products
-      .filter(p => p.product_name.toLowerCase().includes(query))
-      .map(p => ({ name: p.product_name }));
+// // Suggest item endpoint
+// app.get('/api/suggest/item', (req, res) => {
+//   const query = req.query.q.toLowerCase();
+//   const items = products
+//       .filter(p => p.product_name.toLowerCase().includes(query))
+//       .map(p => ({ name: p.product_name }));
 
-  res.json(items);
-});
+//   res.json(items);
+// });
 
-// Search items by location and name
-app.get('/api/search', (req, res) => {
-  const location = req.query.location.toLowerCase();
-  const name = req.query.name.toLowerCase();
+// // Search items by location and name
+// app.get('/api/search', (req, res) => {
+//   const location = req.query.location.toLowerCase();
+//   const name = req.query.name.toLowerCase();
 
-  const filteredProducts = products.filter(p => 
-      p.location.toLowerCase().includes(location) && 
-      p.product_name.toLowerCase().includes(name)
-  );
+//   const filteredProducts = products.filter(p => 
+//       p.location.toLowerCase().includes(location) && 
+//       p.product_name.toLowerCase().includes(name)
+//   );
 
-  res.json(filteredProducts);
-});
+//   res.json(filteredProducts);
+// });
 
 
 
