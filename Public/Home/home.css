@@ -123,6 +123,14 @@
     justify-content: space-evenly;
     
    }
+
+   #user-section {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    
+    
+   }
 /* HEADER MAIN SECTION  */
 .container-header-main {
     

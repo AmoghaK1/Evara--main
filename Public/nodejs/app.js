@@ -153,36 +153,76 @@ app.post('/SELL', upload.single('image'), (req, res) => {
 
 
 
-app.post('/register', async (req, res) => {
-  const { username, email, ph_no, password } = req.body;
+// app.post('/register',upload.single('imagepfp'), async (req, res) => {
+//   const { username, email, ph_no, password} = req.body;
+//   const imagepfp = req.file.path;
+//   try {
+//     // Check if the user already exists
+//     db.query('SELECT username FROM users WHERE username = ?', [username], async (err, results) => {
+//       if (results.length > 0) {
+//         return res.send('User already exists');
+//       }
+//       // Hash the password before saving it
+//       const hashedPassword = await bcrypt.hash(password, 10);
 
+//       // Save the new user
+//       db.query('INSERT INTO users (username, email, ph_no, password, profile_picture) VALUES (?, ?, ?, ?,?)', [username, email, ph_no, hashedPassword,imagepfp], (err, result) => {
+//         if (err) {
+//           throw err;
+//         }
+//         console.log("A user has registered..")
+//         req.session.save(err => {
+//           if (err) {
+//             console.error('Error saving session:', err);
+//           }
+//           res.redirect(`/Home/home-live.html?status=registered`);
+//         });
+//       });
+//     });
+//   } catch (err) {
+//     res.status(500).send('Server error');
+//   }
+// });
+app.post('/register', upload.single('imagepfp'), async (req, res) => {
   try {
+    console.log(req.file);  // Log the file to verify it's received
+    const { username, email, ph_no, password } = req.body;
+
+    if (!req.file) {
+      return res.status(400).send('No file uploaded');
+    }
+
+    const imagepfp = req.file.path;  // Cloudinary should return the file URL here
+    console.log(imagepfp);
+
     // Check if the user already exists
     db.query('SELECT username FROM users WHERE username = ?', [username], async (err, results) => {
       if (results.length > 0) {
         return res.send('User already exists');
       }
-      // Hash the password before saving it
+
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      // Save the new user
-      db.query('INSERT INTO users (username, email, ph_no, password) VALUES (?, ?, ?, ?)', [username, email, ph_no, hashedPassword], (err, result) => {
-        if (err) {
-          throw err;
-        }
-        console.log("A user has registered..")
+      // Save the new user with the profile picture URL from Cloudinary
+      db.query('INSERT INTO users (username, email, ph_no, password, profile_picture) VALUES (?, ?, ?, ?, ?)', [username, email, ph_no, hashedPassword, imagepfp], (err, result) => {
+        if (err) throw err;
+        console.log('User registered with profile picture.');
+
         req.session.save(err => {
           if (err) {
             console.error('Error saving session:', err);
           }
-          res.redirect(`/Home/home-live.html?status=registered`);
+          res.redirect('/Home/home-live.html?status=registered');
         });
       });
     });
   } catch (err) {
+    console.error('Error during registration:', err);
     res.status(500).send('Server error');
   }
 });
+
+
 
 app.post('/login', (req, res) => {
   const { identifier, password } = req.body;  // 'identifier' can be email, username, or phone number
