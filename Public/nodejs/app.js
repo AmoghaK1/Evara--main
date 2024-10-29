@@ -153,36 +153,6 @@ app.post('/SELL', upload.single('image'), (req, res) => {
 
 
 
-// app.post('/register',upload.single('imagepfp'), async (req, res) => {
-//   const { username, email, ph_no, password} = req.body;
-//   const imagepfp = req.file.path;
-//   try {
-//     // Check if the user already exists
-//     db.query('SELECT username FROM users WHERE username = ?', [username], async (err, results) => {
-//       if (results.length > 0) {
-//         return res.send('User already exists');
-//       }
-//       // Hash the password before saving it
-//       const hashedPassword = await bcrypt.hash(password, 10);
-
-//       // Save the new user
-//       db.query('INSERT INTO users (username, email, ph_no, password, profile_picture) VALUES (?, ?, ?, ?,?)', [username, email, ph_no, hashedPassword,imagepfp], (err, result) => {
-//         if (err) {
-//           throw err;
-//         }
-//         console.log("A user has registered..")
-//         req.session.save(err => {
-//           if (err) {
-//             console.error('Error saving session:', err);
-//           }
-//           res.redirect(`/Home/home-live.html?status=registered`);
-//         });
-//       });
-//     });
-//   } catch (err) {
-//     res.status(500).send('Server error');
-//   }
-// });
 
 app.post('/register', async (req, res) => {
   try {
