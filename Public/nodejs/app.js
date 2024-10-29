@@ -32,7 +32,7 @@ app.use(session({
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',       // Replace with your MySQL username
-  password: 'Amogha123', // Replace with your MySQL password
+  password: 'kavya22311220@', // Replace with your MySQL password
   database: 'evaradb'
 });
 
@@ -328,6 +328,41 @@ io.on('connection', (socket) => {
 server.listen(4000, () => {
   console.log('listening on *:4000');
 });
+
+
+app.use(express.json());
+app.post('/search', (req, res) => {
+  const { location, query } = req.body;
+
+  // Example: search logic to retrieve items based on location and query
+  if (location && query) {
+    // Assuming you have a database query function
+    searchItems(location, query).then((results) => {
+      res.status(200).json(results);
+    }).catch((err) => {
+      res.status(500).json({ error: 'Error searching items' });
+    });
+  } else {
+    res.status(400).json({ error: 'Location and search query are required' });
+  }
+});
+
+// Function to search items from database
+async function searchItems(location, query) {
+  // Write your SQL or database query logic here
+  // Example (assuming SQL):
+  // const sql = `SELECT * FROM items WHERE location = ? AND product_name LIKE ?`;
+  // const results = await db.query(sql, [location, `%${query}%`]);
+  // return results;
+
+  // Example mock data:
+  return [
+    { id: 1, name: 'Calculator', price: 10, location: 'Location 1' },
+    { id: 2, name: 'Notebook', price: 5, location: 'Location 2' }
+  ];
+}
+
+
   
 // Start the server
 const PORT = 3000;
