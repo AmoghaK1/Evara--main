@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width">
   <title>trial</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
+  
 </head>
 
 <body> 
@@ -56,6 +57,18 @@
       </div>
     </div>
   </div>
+  <script>
+    
+    window.onload = function(){
+      const urlParams = new URLSearchParams(window.location.search);
+      const status = urlParams.get('status');
+      console.log(status);
+      if(status === 'registered'){
+        alert('Registered Successfully! Please login to Continue..');
+      }
+    }
+    
+  </script>
 </body>
 
 </html>

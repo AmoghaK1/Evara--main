@@ -30,23 +30,13 @@ window.onload = function() {
   const urlParams = new URLSearchParams(window.location.search);
   const status = urlParams.get('status');
   const user = urlParams.get('user');
-  if (status === 'registered') {
-    const userSection = document.getElementById('user-section');
-    userSection.innerHTML = `
-          <img src="/ImagesHome/pfp-test.jpg" alt="Profile Picture" id="pfp" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer;" />
-          <a class="btn btn-light" href="/Sell/sell.html" role="button" style="font-size: 0.7rem; height: 2rem; transform: rotate(-0.61deg); transform-origin: 0 0; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 40px; backdrop-filter: blur(4px)">Sell</a>
-        `;
-    alert('Welcome! You are registered successfully.');
-
-  }
-
   if (status === 'loggedin' && user) {
     const userSection = document.getElementById('user-section');
     userSection.innerHTML = `
-          <img src="/ImagesHome/pfp-test.jpg" alt="Profile Picture" id="pfp" style="width: 40px; height: 40px; margin-right: 1rem; margin-left: 1.75rem ; border-radius: 50%; cursor: pointer;" />
+          <img src="/ImagesHome/pfp_final_1.png" alt="Profile Picture" id="pfp" style="width: 40px; height: 40px; margin-right: 1rem; margin-left: 1.75rem ; border-radius: 50%; cursor: pointer;" />
           <a class="btn btn-light" href="/Sell/sell.html" role="button" style="font-size: 0.86rem; width:6rem; height: 2.2rem; transform: rotate(-0.61deg); transform-origin: 0 0; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 40px; backdrop-filter: blur(4px)">Sell</a>
         `;
-        
+   
     alert(`Welcome back, ${user}!`);
     
         

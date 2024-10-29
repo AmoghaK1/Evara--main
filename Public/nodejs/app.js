@@ -183,44 +183,65 @@ app.post('/SELL', upload.single('image'), (req, res) => {
 //     res.status(500).send('Server error');
 //   }
 // });
-app.post('/register', upload.single('imagepfp'), async (req, res) => {
+
+app.post('/register', async (req, res) => {
   try {
-    console.log(req.file);  // Log the file to verify it's received
     const { username, email, ph_no, password } = req.body;
 
-    if (!req.file) {
-      return res.status(400).send('No file uploaded');
-    }
-
-    const imagepfp = req.file.path;  // Cloudinary should return the file URL here
-    console.log(imagepfp);
+    console.log('Password received from form:', password); // Check if password is available
 
     // Check if the user already exists
     db.query('SELECT username FROM users WHERE username = ?', [username], async (err, results) => {
+      if (err) {
+        console.error('Database query error:', err);
+        return res.status(500).send('Database error');
+      }
       if (results.length > 0) {
-        return res.send('User already exists');
+        return res.status(400).send('User already exists');
       }
 
-      const hashedPassword = await bcrypt.hash(password, 10);
+      // Ensure password is available before hashing
+      if (!password) {
+        return res.status(400).send('Password is required');
+      }
 
-      // Save the new user with the profile picture URL from Cloudinary
-      db.query('INSERT INTO users (username, email, ph_no, password, profile_picture) VALUES (?, ?, ?, ?, ?)', [username, email, ph_no, hashedPassword, imagepfp], (err, result) => {
-        if (err) throw err;
-        console.log('User registered with profile picture.');
+      // Hash the password with bcrypt (use salt rounds, e.g., 10)
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-        req.session.save(err => {
+      // Save the new user without the profile picture
+      db.query(
+        'INSERT INTO users (username, email, ph_no, password) VALUES (?, ?, ?, ?)',
+        [username, email, ph_no, hashedPassword],
+        (err) => {
           if (err) {
-            console.error('Error saving session:', err);
+            console.error('Database insertion error:', err);
+            return res.status(500).send('Failed to register user');
           }
-          res.redirect('/Home/home-live.html?status=registered');
-        });
-      });
+          console.log('User registered successfully.');
+
+          // Save session and redirect
+          req.session.userID = username;
+          req.session.save((err) => {
+            if (err) {
+              console.error('Session saving error:', err);
+              return res.status(500).send('Session error');
+            }
+            // popup.alert({
+            //   content: 'Registered Sucessfully! Please login to Continue..'
+            // })
+            // myalert('Registered Sucessfully! Please login to Continue..')
+            res.redirect('/Login/login.html?status=registered');
+          });
+        }
+      );
     });
   } catch (err) {
     console.error('Error during registration:', err);
     res.status(500).send('Server error');
   }
 });
+
 
 
 
