@@ -319,6 +319,61 @@
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
   }
+
+  #custom-alert {
+    display: none;
+    position: relative;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    opacity: 0; /* Start hidden */
+    animation: fadeIn 0.5s forwards; /* Fade-in animation */
+  }
+  
+  #alert-icon {
+    margin-right: 8px;
+  }
+  
+  #custom-alert button {
+    display: inline-block;
+    margin-left: 1rem;
+    padding: 0.3rem 0.8rem;
+    background: #ff66b2;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Fade-out animation */
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
+
+
+
   /* FOOTER */
  
 
