@@ -48,6 +48,7 @@ window.onload = async function() {
   const urlParams = new URLSearchParams(window.location.search);
   const status = urlParams.get('status');
   const user = urlParams.get('user');
+  const flag = urlParams.get('flag');
 
   if (status === 'loggedin' && user) {
     const userSection = document.getElementById('user-section');
@@ -57,7 +58,11 @@ window.onload = async function() {
     `;
 
     // Show custom alert
-    showAlert(`Welcome back, ${user}!`);
+    if(flag === '0'){
+      showAlert(`Welcome back, ${user}!`);
+    } else if(flag === '1'){
+      showAlert('Product Uploaded Successfully!');
+    }
 
     // Add event listener to redirect to profile page on profile picture click
     document.getElementById('pfp').addEventListener('click', function() {

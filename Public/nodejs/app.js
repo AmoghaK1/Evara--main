@@ -46,12 +46,7 @@ db.connect((err) => {
 
 // API to get all items
 app.get('/api/products', (req, res) => {
-  if (req.session.userID) {
-    console.log(`User ID from session: ${req.session.userID}`);
-    console.log(`Logged in as user: ${req.session.userID}`);
-  } else {
-    console.log('No user has logged in');
-  }
+  
   const query = 'SELECT productID, product_name, product_category, LEFT(product_desc, 20) AS short_description, price, location, status, product_image FROM products';
   db.query(query, (err, results) => {
     if (err) {
@@ -103,18 +98,49 @@ app.post('/SELL', upload.single('image'), (req, res) => {
   let location = req.body.location;
   let prodDetail = req.body.productDetail;
 
-  // Cloudinary will automatically store the image and return the URL in req.file.path
-  const imageUrl = req.file.path; // This is the URL of the uploaded image
+  // Get user info from request
+  const userID = req.body.userID;  // Make sure this matches exactly with what you're sending
+  const username = req.body.username;
 
-  // Insert the product details along with the image URL into the database
-  let sql = `INSERT INTO products (product_name, product_category, price, product_desc, product_image, location) VALUES (?,?,?,?,?,?)`;
+  // Add some debugging
+  console.log('User Data:', { userID, username });
 
-  db.query(sql, [prodName, prodCat, price, prodDetail, imageUrl, location], (err, result) => {
-    if (err) throw err;
-    console.log("Product added to Database with Cloudinary image URL.");
+  // Cloudinary image URL
+  const imageUrl = req.file.path;
+
+  // First, insert the product
+  let productSQL = `INSERT INTO products (product_name, product_category, price, product_desc, product_image, location) VALUES (?,?,?,?,?,?)`;
+
+  db.query(productSQL, [prodName, prodCat, price, prodDetail, imageUrl, location], (err, productResult) => {
+    if (err) {
+      console.error("Error inserting product:", err);
+      return res.status(500).send("Error adding product");
+    }
+
+    // Get the ID of the newly inserted product
+    const productID = productResult.insertId;
+
+    // Debug the values before insertion
+    console.log('Inserting into sellers:', { userID, username, productID });
+
+    // Now insert into sellers table - make sure userID is converted to integer
+    let sellerSQL = `INSERT INTO sellers (userID, username, productID) VALUES (?, ?, ?)`;
     
-    // Redirect to the homepage or confirmation page after the product is added
-    res.redirect('/Home/home-live.html');
+    db.query(sellerSQL, [
+      parseInt(userID, 10) || null, // Convert to integer or null if invalid
+      username,
+      productID
+    ], (err, sellerResult) => {
+      if (err) {
+        console.error("Error inserting seller:", err);
+        console.error("SQL Query:", sellerSQL);
+        console.error("Values:", [userID, username, productID]);
+        return res.status(500).send("Error adding seller information");
+      }
+
+      console.log("Product and seller information added successfully");
+      res.redirect(`/Home/home-live.html?status=loggedin&user=${username}&flag=1`);
+    });
   });
 });
 

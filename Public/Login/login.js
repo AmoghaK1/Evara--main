@@ -33,11 +33,11 @@ document.addEventListener('DOMContentLoaded', function() {
           username: data.user.username,
           email: data.user.email,
           phoneNumber: data.user.phoneNumber,
-          userId: data.user.id
+          userID: data.user.id
         }));
         
         // Redirect to home page with status
-        window.location.href = `/Home/home-live.html?status=loggedin&user=${data.user.username}`;
+        window.location.href = `/Home/home-live.html?status=loggedin&user=${data.user.username}&flag=0`;
       } else {
         alert(data.message || 'Login failed. Please check your credentials.');
       }
