@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Details</title>
+    <link rel="stylesheet" href="bill.css">
+   
+</head>
+<body>
+    <div class="container">
+        <div class="bill-header">
+            <h1>INVOICE</h1>
+            <div class="bill-number">Bill #<span id="billId">Loading...</span></div>
+        </div>
+
+        <div class="bill-info">
+            <div class="bill-section">
+                <h3>From</h3>
+                <div id="sellerInfo">Loading...</div>
+            </div>
+            <div class="bill-section">
+                <h3>To</h3>
+                <div id="buyerInfo">Loading...</div>
+            </div>
+        </div>
+
+        <div class="bill-details">
+            <table class="bill-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="productName">Loading...</td>
+                        <td id="productPrice">Loading...</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="total-amount">
+                Total Amount: $<span id="totalAmount">Loading...</span>
+            </div>
+
+            <button class="btn-proceed" onclick="proceedToPayment()">Proceed to Payment</button>
+        </div>
+    </div>
+
+    <script>
+        async function fetchBillDetails() {
+            try {
+                const response = await fetch('get_bill.php?bill_id=BILL001');
+                const data = await response.json();
+                
+                document.getElementById('billId').textContent = data.bill_id;
+                document.getElementById('sellerInfo').textContent = data.seller_name;
+                document.getElementById('buyerInfo').textContent = data.buyer_name;
+                document.getElementById('productName').textContent = data.product_name;
+                document.getElementById('productPrice').textContent = `$${data.price}`;
+                document.getElementById('totalAmount').textContent = data.price;
+            } catch (error) {
+                console.error('Error fetching bill details:', error);
+            }
+        }
+
+        function proceedToPayment() {
+            alert('Redirecting to payment gateway...');
+            // Add your payment gateway integration here
+        }
+
+        // Fetch bill details when page loads
+        document.addEventListener('DOMContentLoaded', fetchBillDetails);
+    </script>
+</body>
+</html>

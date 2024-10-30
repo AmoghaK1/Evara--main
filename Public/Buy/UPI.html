@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Details | Evara</title>
+    <link rel="stylesheet" href="UPI.css">
+    
+</head>
+<body>
+    <div class="container">
+        <h2>Confirm Your Details</h2>
+        <div class="message">Please confirm your information before proceeding to billing</div>
+        
+        <form class="form-horizontal" id="confirmForm">
+            <div class="form-group">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" id="username" class="form-control" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" id="email" class="form-control" readonly>
+            </div>
+
+            <div class="button-container">
+                <button type="submit" class="btn-proceed">Proceed to Billing</button>
+            </div>
+        </form>
+
+        <footer>
+            <a href="/Buy/Payment.html">Back to Payment Methods</a>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get user data from localStorage
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            const username = userData.username;
+            const email = userData.email;
+            // Auto-fill the form if data exists
+            if (username && email) {
+                document.getElementById('username').value = username;
+                document.getElementById('email').value = email;
+            } else {
+                // Redirect to login if no data found
+                alert('Please log in first');
+                window.location.href = '/Login/login.html';
+            }
+
+            // Handle form submission
+            document.getElementById('confirmForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Verify data exists before proceeding
+                if (username && email) {
+                    // Redirect to billing page
+                    window.location.href = '/Buy/bill.html';
+                } else {
+                    alert('Please log in to continue');
+                    window.location.href = '/Login/login.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -285,7 +285,7 @@ io.on('connection', (socket) => {
 
 
 server.listen(4000, () => {
-  console.log('listening on *:4000');
+  console.log('notification sent on port 4000');
 });
 
 
