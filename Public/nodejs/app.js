@@ -70,6 +70,44 @@ app.get('/api/products/:id', (req, res) => {
   });
 });
 
+// server.js
+app.get('/api/bill-details', (req, res) => {
+  const productId = req.query.productId;
+
+  // Fetch the seller's name
+  db.query('SELECT username FROM sellers WHERE productID = ?', [productId], (err, sellerResult) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error fetching seller data' });
+    }
+
+    const sellerName = sellerResult[0].username;
+
+    // Fetch the product name and price
+    db.query('SELECT name, price FROM products WHERE id = ?', [productId], (err, productResult) => {
+      if (err) {
+        return res.status(500).json({ error: 'Error fetching product data' });
+      }
+
+      const { name, price } = productResult[0];
+
+      // Prepare the bill details response
+      const billDetails = {
+        from: sellerName,
+        to: 'Buyer Name', // Assuming the buyer's name is stored elsewhere
+        product: name,
+        price: price,
+        totalAmount: price
+      };
+
+      res.json(billDetails);
+    });
+  });
+});
+
+
+
+
+
 app.get('/Home/home-live.html', (req,res) => {
   
 });
@@ -290,6 +328,13 @@ app.post('/login', (req, res) => {
 
 
 
+
+
+
+
+
+
+
 app.get('/send-notification', (req, res) => {
   const notification = {
       title: "New Notification",
@@ -301,7 +346,7 @@ app.get('/send-notification', (req, res) => {
   res.send("Notification sent!");
 });
 
-io.on('connection', (socket) => {
+io.on('db', (socket) => {
   console.log('a user connected');
   socket.on('disconnect', () => {
       console.log('user disconnected');
@@ -310,9 +355,7 @@ io.on('connection', (socket) => {
 
 
 
-server.listen(4000, () => {
-  console.log('notification sent on port 4000');
-});
+
 
 
 app.use(express.json());
@@ -353,4 +396,8 @@ async function searchItems(location, query) {
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+});
+
+server.listen(4000, () => {
+  console.log('notification sent on port 4000');
 });

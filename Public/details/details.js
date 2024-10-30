@@ -6,26 +6,52 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(response => response.json())
     .then(data => {
       if (data.length > 0) {
-        const item = data[0];  
-        
+        const item = data[0];
+
         const productImage = document.getElementById('product-image');
-          productImage.innerHTML = `
+        productImage.innerHTML = `
           <img src="${item.product_image}" alt="Product image">
-          
         `;
+
         const productDesc = document.getElementById('product-desc');
         productDesc.innerHTML = `
-        <h2>${item.product_name}</h2>
-          
+          <h2>${item.product_name}</h2>
           <p>${item.product_desc}</p>
           <p>Price: ${item.price}</p>
           <p>Location: ${item.location}</p>
-          <p>Status: ${item.status}</p>`
-        
+          <p>Status: ${item.status}</p>
+        `;
+
+        // Add event listeners to the buttons
+        const buyButton = document.getElementsByClassName('buy');
+        buyButton.addEventListener('click', () => {
+          saveProductId(productId);
+          window.location.href = `/bill.html?productId=${productId}`;
+        });
+
+        const cancelButton = document.getElementById('cancel-button');
+        cancelButton.addEventListener('click', () => {
+          removeProductId();
+          window.history.back();
+        });
+
+        const backButton = document.getElementById('back-button');
+        backButton.addEventListener('click', () => {
+          removeProductId();
+          window.history.back();
+        });
       } else {
-        // Handle case when no data is returned
+        const productDesc = document.getElementById('product-desc');
         productDesc.innerHTML = '<p>Item not found</p>';
       }
     })
     .catch(err => console.error('Error fetching product details:', err));
+
+  function saveProductId(productId) {
+    localStorage.setItem('productId', productId);
+  }
+
+  function removeProductId() {
+    localStorage.removeItem('productId');
+  }
 });

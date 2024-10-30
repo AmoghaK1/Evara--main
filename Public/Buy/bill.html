@@ -17,11 +17,11 @@
         <div class="bill-info">
             <div class="bill-section">
                 <h3>From</h3>
-                <div id="sellerInfo">Loading...</div>
+                <div id="from-value"></div>
             </div>
             <div class="bill-section">
                 <h3>To</h3>
-                <div id="buyerInfo">Loading...</div>
+                <div id="to-value">.</div>
             </div>
         </div>
 
@@ -35,8 +35,8 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td id="productName">Loading...</td>
-                        <td id="productPrice">Loading...</td>
+                        <td id="product-value"></td>
+                        <td id="price-value"></td>
                     </tr>
                 </tbody>
             </table>
@@ -50,29 +50,30 @@
     </div>
 
     <script>
-        async function fetchBillDetails() {
-            try {
-                const response = await fetch('get_bill.php?bill_id=BILL001');
-                const data = await response.json();
-                
-                document.getElementById('billId').textContent = data.bill_id;
-                document.getElementById('sellerInfo').textContent = data.seller_name;
-                document.getElementById('buyerInfo').textContent = data.buyer_name;
-                document.getElementById('productName').textContent = data.product_name;
-                document.getElementById('productPrice').textContent = `$${data.price}`;
-                document.getElementById('totalAmount').textContent = data.price;
-            } catch (error) {
-                console.error('Error fetching bill details:', error);
-            }
-        }
+       document.addEventListener('DOMContentLoaded', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const productId = urlParams.get('productId');
 
-        function proceedToPayment() {
-            alert('Redirecting to payment gateway...');
-            // Add your payment gateway integration here
-        }
+  fetch(`/api/bill-details?productId=${productId}`)
+    .then(response => response.json())
+    .then(data => {
+      // Populate the bill details
+      document.getElementById('from-value').textContent = data.from;
+      document.getElementById('to-value').textContent = data.to;
+      document.getElementById('product-value').textContent = data.product;
+      document.getElementById('price-value').textContent = `$${data.price}`;
+      document.getElementById('total-value').textContent = `$${data.totalAmount}`;
+    })
+    .catch(error => {
+      console.error('Error fetching bill details:', error);
+    });
 
-        // Fetch bill details when page loads
-        document.addEventListener('DOMContentLoaded', fetchBillDetails);
+  // Add event listener to the "Proceed to Payment" button
+  document.getElementById('proceed-btn').addEventListener('click', () => {
+    // Handle the payment flow
+    // ...
+  });
+});
     </script>
 </body>
 </html>

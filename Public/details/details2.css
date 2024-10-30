@@ -95,3 +95,7 @@ button.contact {
 button.contact:hover {
     background-color: #27ae60;
 }
+
+button#cancel-button, button#back-button {
+    background-color: #f44336;
+  }
