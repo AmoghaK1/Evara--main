@@ -191,7 +191,6 @@ app.post('/register', async (req, res) => {
           console.log('User registered successfully.');
 
           // Save session and redirect
-          req.session.userID = username;
           req.session.save((err) => {
             if (err) {
               console.error('Session saving error:', err);
@@ -215,65 +214,55 @@ app.post('/register', async (req, res) => {
 
 
 
+// Server-side (Express) - Update the login endpoint
 app.post('/login', (req, res) => {
-  const { identifier, password } = req.body;  // 'identifier' can be email, username, or phone number
+  const { identifier, password } = req.body;
 
-  // Search for user by email, username, or phone number
   db.query(
     'SELECT * FROM users WHERE email = ? OR username = ? OR ph_no = ?',
     [identifier, identifier, identifier],
     async (err, results) => {
-      if (err) throw err;
+      if (err) {
+        return res.status(500).json({ 
+          success: false, 
+          message: 'Server error' 
+        });
+      }
 
       if (results.length > 0) {
         const user = results[0];
-
-        // Compare password
         const match = await bcrypt.compare(password, user.password);
 
         if (match) {
-          // Store userId in session
-          
           req.session.userID = user.userID;
-          console.log(`User ${user.userID} has Logged in..`)
-          req.session.save(err => {
-            if (err) {
-              console.error('Error saving session:', err);
+          
+          // Send back user data (excluding sensitive information)
+          res.status(200).json({ 
+            success: true,
+            user: {
+              username: user.username,
+              email: user.email,
+              phoneNumber: user.ph_no,
+              id: user.userID
             }
-            res.redirect(`/Home/home-live.html?status=loggedin&user=${user.username}`);
           });
         } else {
-          res.send('Invalid email/username/phone number or password');
+          res.status(401).json({ 
+            success: false, 
+            message: 'Invalid credentials' 
+          });
         }
       } else {
-        res.send('No user found with that identifier');
+        res.status(404).json({ 
+          success: false, 
+          message: 'User not found' 
+        });
       }
     }
   );
 });
 
 
-app.get('/session', (req, res) => {
-  console.log(req.session.userID);
-  if (req.session.userID) {
-    // Fetch user data to get the profile picture (assuming you store profile picture URL in the database)
-    db.query('SELECT profile_picture FROM users WHERE userID = ?', [req.session.userID], (err, results) => {
-      if (err) throw err;
-      
-      if (results.length > 0) {
-        res.json({
-          loggedIn: true,
-          profilePicture: results[0].profile_picture || '/default-pfp.png' // Provide default profile picture if none exists
-          
-        });
-        
-      }
-    });
-  } else {
-    res.json({ loggedIn: false });
-    console.log("No one logged in...")
-  }
-});
 
 app.get('/send-notification', (req, res) => {
   const notification = {
