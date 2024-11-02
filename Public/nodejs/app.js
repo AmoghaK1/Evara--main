@@ -11,6 +11,7 @@ require('dotenv').config();
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
+const path = require('path');
 
 const app = express();
 app.use(bodyParser.json());
@@ -32,7 +33,7 @@ app.use(session({
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',       // Replace with your MySQL username
-  password: 'Amogha123', // Replace with your MySQL password
+  password: 'kavya22311220@', // Replace with your MySQL password
   database: 'evaradb'
 });
 
@@ -354,42 +355,105 @@ io.on('db', (socket) => {
 });
 
 
+//SEARCH//
 
+// Define the search endpoint to handle both product and location search
+app.get('/api/search', (req, res) => {
+  const search = req.query.search || "";      // Get search term for product
+  const location = req.query.location || "";  // Get search term for location
 
+  const query = `
+    SELECT * FROM products 
+    WHERE product_name LIKE ? AND location LIKE ?
+  `;
 
+  db.query(query, [`%${search}%`, `%${location}%`], (error, results) => {
+    if (error) return res.status(500).send("Error retrieving results");
 
-app.use(express.json());
-app.post('/search', (req, res) => {
-  const { location, query } = req.body;
-
-  // Example: search logic to retrieve items based on location and query
-  if (location && query) {
-    // Assuming you have a database query function
-    searchItems(location, query).then((results) => {
-      res.status(200).json(results);
-    }).catch((err) => {
-      res.status(500).json({ error: 'Error searching items' });
-    });
-  } else {
-    res.status(400).json({ error: 'Location and search query are required' });
-  }
+    res.json(results);  // Return matching products as JSON
+  });
 });
 
-// Function to search items from database
-async function searchItems(location, query) {
-  // Write your SQL or database query logic here
-  // Example (assuming SQL):
-  // const sql = `SELECT * FROM items WHERE location = ? AND product_name LIKE ?`;
-  // const results = await db.query(sql, [location, `%${query}%`]);
-  // return results;
 
-  // Example mock data:
-  return [
-    { id: 1, name: 'Calculator', price: 10, location: 'Location 1' },
-    { id: 2, name: 'Notebook', price: 5, location: 'Location 2' }
-  ];
-}
+// db.connect(err => {
+//   if (err) throw err;
+//   console.log("Connected to database");
+// });
 
+// // Define the search endpoint
+// app.get('/api/search', (req, res) => {
+//   const search = req.query.search;      // Get search term
+//   const location = req.query.location;  // Get location term
+
+//   const query = `
+//     SELECT * FROM products 
+//     WHERE product_name LIKE ? AND location LIKE ?
+//   `;
+
+//   db.query(query, [`%${search}%`, `%${location}%`], (error, results) => {
+//     if (error) return res.status(500).send("Error retrieving results");
+
+//     res.json(results);
+//   });
+// });
+
+
+
+// app.get('/suggest-locations', (req, res) => {
+//   const searchQuery = req.query.q; // Get the search query from the request
+//   const sqlQuery = `SELECT DISTINCT location FROM products WHERE location LIKE ? LIMIT 10`;
+
+//   // Execute the query with a wildcard to match partial entries
+//   db.query(sqlQuery, [`%${searchQuery}%`], (error, results) => {
+//       if (error) {
+//           console.error(error);
+//           return res.status(500).json({ error: 'Error fetching locations' });
+//       }
+//       // Extract location names from results and send back as JSON
+//       const locations = results.map(result => result.location);
+//       res.json(locations);
+//   });
+// });
+
+// // This function will handle the form submission
+// function handleSearch(event) {
+//   event.preventDefault(); // Prevent default form submission
+
+//   // Get the values of search-query and location inputs
+//   const searchQuery = document.getElementById("search-query").value;
+//   const locationQuery = document.getElementById("location-input").value;
+
+//   // Create a URL-encoded query string to send to the backend
+//   const queryString = `search=${encodeURIComponent(searchQuery)}&location=${encodeURIComponent(locationQuery)}`;
+
+//   // Send a fetch request to the backend API endpoint
+//   fetch(`/api/search?${queryString}`)
+//     .then(response => response.json())
+//     .then(data => {
+//       // Process and display results (this part depends on your UI)
+//       console.log(data); // Log the results for now
+//       // You could add code here to update the page with results
+//     })
+//     .catch(error => {
+//       console.error("Error fetching search results:", error);
+//     });
+// }
+
+
+// app.get('/suggest-locations', (req, res) => {
+//   const searchTerm = req.query.q;  // 'q' is the query parameter, i.e., what the user types in
+
+//   const query = `SELECT DISTINCT location FROM products WHERE location LIKE ? LIMIT 10`;
+//   db.query(query, [`${searchTerm}%`], (error, results) => {
+//       if (error) {
+//           console.error('Error fetching suggestions:', error);
+//           return res.status(500).send('Error fetching suggestions');
+//       }
+
+//       const locations = results.map(row => row.location);
+//       res.json(locations);
+//   });
+// });
 
   
 // Start the server
