@@ -33,7 +33,7 @@ app.use(session({
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',       // Replace with your MySQL username
-  password: 'kavya22311220@', // Replace with your MySQL password
+  password: 'Amogha123', // Replace with your MySQL password
   database: 'evaradb'
 });
 
@@ -54,6 +54,21 @@ app.get('/api/products', (req, res) => {
       return res.status(500).json({ error: 'Database query failed' });
     }
     res.json(results);
+  });
+});
+app.get('/api/search', (req, res) => {
+  const search = req.query.search || "";      // Get search term for product
+  const location = req.query.location || "";  // Get search term for location
+
+  const query = `
+    SELECT * FROM products 
+    WHERE product_name LIKE ? AND location LIKE ?
+  `;
+
+  db.query(query, [`%${search}%`, `%${location}%`], (error, results) => {
+    if (error) return res.status(500).send("Error retrieving results");
+
+    res.json(results);  // Return matching products as JSON
   });
 });
 
@@ -358,21 +373,6 @@ io.on('db', (socket) => {
 //SEARCH//
 
 // Define the search endpoint to handle both product and location search
-app.get('/api/search', (req, res) => {
-  const search = req.query.search || "";      // Get search term for product
-  const location = req.query.location || "";  // Get search term for location
-
-  const query = `
-    SELECT * FROM products 
-    WHERE product_name LIKE ? AND location LIKE ?
-  `;
-
-  db.query(query, [`%${search}%`, `%${location}%`], (error, results) => {
-    if (error) return res.status(500).send("Error retrieving results");
-
-    res.json(results);  // Return matching products as JSON
-  });
-});
 
 
 // db.connect(err => {

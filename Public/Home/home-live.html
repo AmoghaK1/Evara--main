@@ -142,49 +142,14 @@
   <!-- Search Form -->
 
   <!-- Search Form -->
-  <form class="d-flex" role="search" id="search-bar" style="width: 60%;" onsubmit="handleSearch(event)">
-    <input class="form-control me-2" id="search-query" type="search" placeholder="Ex. Calculators" aria-label="Search" style="width: 75%; background-color: rgba(70, 68, 68, 0.062); border-color: rgb(162, 156, 156);">
-    <input class="form-control me-2" id="location-input" type="search" placeholder="Location" aria-label="Location" style="width: 75%; background-color: rgba(70, 68, 68, 0.062); border-color: rgb(162, 156, 156);">
-    <button class="go-button go-type1" type="submit">
-      <span class="go-btn-txt">Go!</span>
-    </button>
-  </form>
+ 
 
+
+  
   <!-- Container to display search results -->
-  <div id="results-container"></div>
+  
 
-  <script>
-    // JavaScript function to handle search request
-    function handleSearch(event) {
-      event.preventDefault(); // Prevent the form from submitting the traditional way
 
-      const searchQuery = document.getElementById("search-query").value; // Product search term
-      const locationQuery = document.getElementById("location-input").value; // Location search term
-      const queryString = `search=${encodeURIComponent(searchQuery)}&location=${encodeURIComponent(locationQuery)}`;
-
-      // Fetch results from the backend
-      fetch(`/api/search?${queryString}`)
-        .then(response => response.json())
-        .then(data => displayResults(data))
-        .catch(error => console.error("Error fetching search results:", error));
-    }
-
-    // Display search results in the DOM
-    function displayResults(results) {
-      const resultsContainer = document.getElementById("results-container");
-      resultsContainer.innerHTML = ""; // Clear previous results
-
-      if (results.length === 0) {
-        resultsContainer.innerHTML = "<p>No matching products found.</p>";
-      } else {
-        results.forEach(item => {
-          const itemDiv = document.createElement("div");
-          itemDiv.innerHTML = `<p>Product: ${item.product_name}, Location: ${item.location}, Price: ${item.price}</p>`;
-          resultsContainer.appendChild(itemDiv);
-        });
-      }
-    }
-  </script>
 
       <!-- <form class="d-flex" role="search" id="search-bar" style="width: 60%;" onsubmit="handleSearch(event)">
         <input class="form-control me-2" id="search-query" type="search" placeholder="Ex. Calculators" aria-label="Search" style="width: 75%; background-color: rgba(70, 68, 68, 0.062); border-color: rgb(162, 156, 156);">
@@ -281,44 +246,7 @@
       }
       </script> -->
   
-      <script src="script.js"></script> <!-- Link to your external JS file if you are using one -->
-      <script>
-// Add an event listener to capture input in the search box
-document.getElementById('searchBox').addEventListener('input', function() {
-    const query = this.value.trim(); // Trim any unnecessary whitespace
-    const suggestionsDiv = document.getElementById('suggestions'); // Suggestion display area
-
-    if (query.length > 2) { // Start showing suggestions after 3 characters
-        fetch(`/suggest-locations?q=${encodeURIComponent(query)}`)
-            .then(response => response.json())
-            .then(data => {
-                // Clear previous suggestions
-                suggestionsDiv.innerHTML = '';
-
-                // Populate the suggestions div with the received data
-                data.forEach(location => {
-                    const suggestionItem = document.createElement('div');
-                    suggestionItem.textContent = location;
-                    suggestionItem.className = 'suggestion-item'; // Optional: Add class for styling
-
-                    // Add click event to populate search box with chosen suggestion
-                    suggestionItem.addEventListener('click', () => {
-                        document.getElementById('searchBox').value = location;
-                        suggestionsDiv.innerHTML = ''; // Clear suggestions once selected
-                    });
-
-                    // Append each suggestion to the suggestions div
-                    suggestionsDiv.appendChild(suggestionItem);
-                });
-            })
-            .catch(error => console.error('Error fetching location suggestions:', error));
-    } else {
-        // Clear suggestions if query is too short
-        suggestionsDiv.innerHTML = '';
-    }
-});
-
-      </script>
+     
       
     
     <!-- CATEGORIES CIRCLES -->
@@ -393,7 +321,16 @@ document.getElementById('searchBox').addEventListener('input', function() {
             </div>
         </div>
     </div>
-
+    <div class="container-header-main">
+      <div class="select-search-box" id="search-form">
+    <form class="d-flex" role="search" id="search-bar" style="width: 60%;" onsubmit="handleSearch(event)">
+      <input class="form-control me-2" id="search-query" type="search" placeholder="Ex. Calculators" aria-label="Search" style="width: 75%; background-color: rgba(70, 68, 68, 0.062); border-color: rgb(162, 156, 156);">
+      <input class="form-control me-2" id="location-input" type="search" placeholder="Location" aria-label="Location" style="width: 75%; background-color: rgba(70, 68, 68, 0.062); border-color: rgb(162, 156, 156);">
+      <button class="go-button go-type1" type="submit">
+        <span class="go-btn-txt">Go!</span>
+      </button>
+    </form>
+    </div></div>
     <!-- FRESH RECOMMENDATION SECTION -->
 
     <div class="container-lg">

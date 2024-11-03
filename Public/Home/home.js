@@ -87,32 +87,123 @@ function closeAlert() {
   document.getElementById('custom-alert').style.display = 'none';
 }
 
+// Function to create product box HTML (reusable for both initial load and search)
+function createProductBox(item) {
+  const itemDiv = document.createElement('div');
+  itemDiv.className = 'item';
+  
+  itemDiv.innerHTML = `
+    <img src="${item.product_image}" alt="Product Image"> 
+    <h3>${item.product_name}</h3>
+    <p class="item-description">
+      ${item.short_description}...<a href="/details/product-details.html?id=${item.productID}" class="read-more">Read more</a>
+    </p>
+    <p>Price: ${item.price}</p>
+    <p>Category: ${item.product_category}</p>
+    <p>Location: ${item.location}</p>
+    <p>Status: ${item.status}</p>
+  `;
+  
+  return itemDiv;
+}
+
+// Function to display products in the container
+function displayProducts(products) {
+  const itemsContainer = document.getElementById('items-container');
+  itemsContainer.innerHTML = ''; // Clear existing content
+  
+  if (products.length === 0) {
+    itemsContainer.innerHTML = '<p>No matching products found.</p>';
+    return;
+  }
+  
+  products.forEach(item => {
+    const itemDiv = createProductBox(item);
+    itemsContainer.appendChild(itemDiv);
+  });
+}
+
+// Initial load of all products
+fetch('/api/products')
+  .then(response => response.json())
+  .then(data => displayProducts(data))
+  .catch(error => console.error('Error loading products:', error));
+
+// Handle search
+function handleSearch(event) {
+  event.preventDefault();
+  
+  const searchQuery = document.getElementById("search-query").value;
+  const locationQuery = document.getElementById("location-input").value;
+  const queryString = `search=${encodeURIComponent(searchQuery)}&location=${encodeURIComponent(locationQuery)}`;
+  
+  fetch(`/api/search?${queryString}`)
+    .then(response => response.json())
+    .then(data => displayProducts(data)) // Use the same display function
+    .catch(error => console.error("Error fetching search results:", error));
+}
 
 
-fetch('http://localhost:3000/api/products')
-      .then(response => response.json())
-      .then(data => {
-        const itemsContainer = document.getElementById('items-container');
-        data.forEach(item => {
-          const itemDiv = document.createElement('div');
-          itemDiv.className = 'item';
+// fetch('http://localhost:3000/api/products')
+//       .then(response => response.json())
+//       .then(data => {
+//         const itemsContainer = document.getElementById('items-container');
+//         data.forEach(item => {
+//           const itemDiv = document.createElement('div');
+//           itemDiv.className = 'item';
 
-          // Populate each item div with item data
-          itemDiv.innerHTML = `
-            <img src="${item.product_image}" alt="Product Image"> 
-            <h3>${item.product_name}</h3>
-            <p class="item-description">
-             ${item.short_description}...<a href="/details/product-details.html?id=${item.productID}" class="read-more">Read more</a>
-            </p>
+//           // Populate each item div with item data
+//           itemDiv.innerHTML = `
+//             <img src="${item.product_image}" alt="Product Image"> 
+//             <h3>${item.product_name}</h3>
+//             <p class="item-description">
+//              ${item.short_description}...<a href="/details/product-details.html?id=${item.productID}" class="read-more">Read more</a>
+//             </p>
 
-            <p>Price: ${item.price}</p>
-            <p>Category: ${item.product_category}</p>
-            <p>Location: ${item.location}</p>
-            <p>Status: ${item.status}</p>
-          `;
-          itemsContainer.appendChild(itemDiv);
-        });
-      });
+//             <p>Price: ${item.price}</p>
+//             <p>Category: ${item.product_category}</p>
+//             <p>Location: ${item.location}</p>
+//             <p>Status: ${item.status}</p>
+//           `;
+//           itemsContainer.appendChild(itemDiv);
+//         });
+//       });
+
+//       function handleSearch(event) {
+//         event.preventDefault(); // Prevent the form from submitting the traditional way
+  
+//         const searchQuery = document.getElementById("search-query").value; // Product search term
+//         const locationQuery = document.getElementById("location-input").value; // Location search term
+//         const queryString = `search=${encodeURIComponent(searchQuery)}&location=${encodeURIComponent(locationQuery)}`;
+  
+//         // Fetch results from the backend
+//         fetch(`/api/search?${queryString}`)
+//           .then(response => response.json())
+//           .then(data => displayResults(data))
+//           .catch(error => console.error("Error fetching search results:", error));
+//       }
+  
+//       // Display search results in the DOM
+//       function displayResults(results) {
+//         const resultsContainer = document.getElementById("results-container");
+//         resultsContainer.innerHTML = ""; // Clear previous results
+  
+//         if (results.length === 0) {
+//           resultsContainer.innerHTML = "<p>No matching products found.</p>";
+//         } else {
+//           results.forEach(item => {
+//             const itemDiv = document.createElement("div");
+//             itemDiv.innerHTML = `<p>Product: ${item.product_name}, Location: ${item.location}, Price: ${item.price}</p>`;
+//             resultsContainer.appendChild(itemDiv);
+//           });
+//         }
+//       }
+
+
+
+
+
+
 
       const socket = io();
       const notificationBell = document.getElementById('notificationBell');
@@ -149,6 +240,57 @@ fetch('http://localhost:3000/api/products')
           newNotification.innerText = `${notification.title}: ${notification.body} (${notification.timestamp})`;
           notifications.appendChild(newNotification);
       }
+
+
+   
+      // JavaScript function to handle search request
+     
+    
+
+// Add an event listener to capture input in the search box
+// document.getElementById('searchBox').addEventListener('input', function() {
+//     const query = this.value.trim(); // Trim any unnecessary whitespace
+//     const suggestionsDiv = document.getElementById('suggestions'); // Suggestion display area
+
+//     if (query.length > 2) { // Start showing suggestions after 3 characters
+//         fetch(`/suggest-locations?q=${encodeURIComponent(query)}`)
+//             .then(response => response.json())
+//             .then(data => {
+//                 // Clear previous suggestions
+//                 suggestionsDiv.innerHTML = '';
+
+//                 // Populate the suggestions div with the received data
+//                 data.forEach(location => {
+//                     const suggestionItem = document.createElement('div');
+//                     suggestionItem.textContent = location;
+//                     suggestionItem.className = 'suggestion-item'; // Optional: Add class for styling
+
+//                     // Add click event to populate search box with chosen suggestion
+//                     suggestionItem.addEventListener('click', () => {
+//                         document.getElementById('searchBox').value = location;
+//                         suggestionsDiv.innerHTML = ''; // Clear suggestions once selected
+//                     });
+
+//                     // Append each suggestion to the suggestions div
+//                     suggestionsDiv.appendChild(suggestionItem);
+//                 });
+//             })
+//             .catch(error => console.error('Error fetching location suggestions:', error));
+//     } else {
+//         // Clear suggestions if query is too short
+//         suggestionsDiv.innerHTML = '';
+//     }
+// });
+
+   
+      
+
+
+
+
+
+
+
 
 //location search option
 
