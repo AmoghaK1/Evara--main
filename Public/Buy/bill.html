@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bill Details</title>
     <link rel="stylesheet" href="bill.css">
-   
 </head>
 <body>
     <div class="container">
@@ -21,7 +20,7 @@
             </div>
             <div class="bill-section">
                 <h3>To</h3>
-                <div id="to-value">.</div>
+                <div id="to-value"></div>
             </div>
         </div>
 
@@ -50,30 +49,62 @@
     </div>
 
     <script>
-       document.addEventListener('DOMContentLoaded', () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const productId = urlParams.get('productId');
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        const buyerName = userData.username;
+            
+       document.addEventListener('DOMContentLoaded', function() {
+    // Extract productId from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('productId');
+    
+    console.log('ProductID from URL:', productId); // Debug log
 
-  fetch(`/api/bill-details?productId=${productId}`)
-    .then(response => response.json())
-    .then(data => {
-      // Populate the bill details
-      document.getElementById('from-value').textContent = data.from;
-      document.getElementById('to-value').textContent = data.to;
-      document.getElementById('product-value').textContent = data.product;
-      document.getElementById('price-value').textContent = `$${data.price}`;
-      document.getElementById('total-value').textContent = `$${data.totalAmount}`;
-    })
-    .catch(error => {
-      console.error('Error fetching bill details:', error);
-    });
+    if (!productId) {
+        alert('Product ID not found');
+        return;
+    }
 
-  // Add event listener to the "Proceed to Payment" button
-  document.getElementById('proceed-btn').addEventListener('click', () => {
-    // Handle the payment flow
-    // ...
-  });
+    // Set a random bill number
+    document.getElementById('billId').textContent = Math.floor(Math.random() * 100000);
+
+    // Fetch bill details
+    fetch(`/api/bill-details/${productId}`)
+        .then(response => {
+            console.log('API Response status:', response.status); // Debug log
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Received data:', data); // Debug log
+            
+            // Update all fields
+            document.getElementById('from-value').textContent = data.from || 'No seller found';
+            document.getElementById('to-value').textContent = buyerName || 'No buyer found';
+            document.getElementById('product-value').textContent = data.product || 'No product found';
+            document.getElementById('price-value').textContent = data.price ? `$${data.price}` : 'Price not available';
+            document.getElementById('totalAmount').textContent = data.totalAmount || 'Total not available';
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            const errorMessage = 'Error loading data';
+            
+            // Update all fields with error message
+            document.getElementById('from-value').textContent = errorMessage;
+            document.getElementById('to-value').textContent = errorMessage;
+            document.getElementById('product-value').textContent = errorMessage;
+            document.getElementById('price-value').textContent = errorMessage;
+            document.getElementById('totalAmount').textContent = errorMessage;
+        });
 });
+
+function proceedToPayment() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('productId');
+    // Add your payment navigation logic here
+    window.location.href = `/Buy/final_payment.html?productId=${productId}`;
+}
     </script>
 </body>
 </html>

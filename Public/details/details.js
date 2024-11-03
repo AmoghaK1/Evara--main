@@ -1,6 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   const productId = urlParams.get('id');
+  const buttonContainer = document.getElementsByClassName("buttons")[0]; // Corrected line
+  
+  buttonContainer.innerHTML = `
+    <a href="/Buy/Payment.html?productId=${productId}"><button class="buy">Buy</button></a>
+    <button class="contact" id="contact">Contact Seller</button>
+  `;
   
   fetch(`http://localhost:3000/api/products/${productId}`)
     .then(response => response.json())
@@ -22,13 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
           <p>Status: ${item.status}</p>
         `;
 
-        // Add event listeners to the buttons
-        const buyButton = document.getElementsByClassName('buy');
-        buyButton.addEventListener('click', () => {
-          saveProductId(productId);
-          window.location.href = `/bill.html?productId=${productId}`;
-        });
-
         const cancelButton = document.getElementById('cancel-button');
         cancelButton.addEventListener('click', () => {
           removeProductId();
@@ -39,6 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
         backButton.addEventListener('click', () => {
           removeProductId();
           window.history.back();
+        });
+
+        const contactSellerButton = document.getElementById('contact-seller-button');
+        contactSellerButton.addEventListener('click', () => {
+          // Replace this alert with your actual "contact seller" logic
+          alert(`Contacting the seller for product ID: ${productId}`);
         });
       } else {
         const productDesc = document.getElementById('product-desc');

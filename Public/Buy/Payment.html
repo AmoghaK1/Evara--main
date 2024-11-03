@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/Logo/evara-logo.svg">
-    <title>Payment Methods</title>
+    <title>Payment Methods | Evara</title>
     <link rel="stylesheet" href="Payment.css">
 </head>
 
@@ -13,21 +13,33 @@
     <div class="container">
         <h2>Select Payment Method</h2>
         <div class="payment-methods">
-            <a href="CC.html?method=Credit+Card">
+            <a href="CC.html" id="credit-card-link">
                 <div class="payment-method">Credit Card</div>
             </a>
-            <a href="DC.html?method=Debit+Card">
+            <a href="DC.html" id="debit-card-link">
                 <div class="payment-method">Debit Card</div>
             </a>
-            <a href="UPI.html?method=UPI">
+            <a href="UPI.html" id="upi-link">
                 <div class="payment-method">UPI</div>
             </a>
-            <a href="Cash.html?method=Cash">
+            <a href="Cash.html" id="cash-link">
                 <div class="payment-method">Cash</div>
             </a>
-
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+        // Get the productId from the current URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('productId');
+    
+        // Update each payment method link with the productId and method
+        document.getElementById('credit-card-link').href = `CC.html?productId=${productId}&method=Credit+Card`;
+        document.getElementById('debit-card-link').href = `DC.html?productId=${productId}&method=Debit+Card`;
+        document.getElementById('upi-link').href = `UPI.html?productId=${productId}&method=UPI`;
+        document.getElementById('cash-link').href = `Cash.html?productId=${productId}&method=Cash`;
+    });
+    </script>
 </body>
 
 </html>

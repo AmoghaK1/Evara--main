@@ -86,39 +86,66 @@ app.get('/api/products/:id', (req, res) => {
   });
 });
 
-// server.js
-app.get('/api/bill-details', (req, res) => {
-  const productId = req.query.productId;
+
+// Backend route
+app.get('/api/bill-details/:id', (req, res) => {
+  const productId = req.params.id;
+  console.log("billing", productId);
+
+  // First check if productId exists
+  if (!productId) {
+    return res.status(400).json({ error: 'Product ID is required' });
+  }
+
+  // Add error logging
+  console.log(`Attempting to fetch details for product: ${productId}`);
 
   // Fetch the seller's name
   db.query('SELECT username FROM sellers WHERE productID = ?', [productId], (err, sellerResult) => {
     if (err) {
+      console.error('Database error (sellers):', err);
       return res.status(500).json({ error: 'Error fetching seller data' });
+    }
+
+    if (!sellerResult || sellerResult.length === 0) {
+      console.log('No seller found for productId:', productId);
+      return res.status(404).json({ error: 'Seller not found' });
     }
 
     const sellerName = sellerResult[0].username;
 
     // Fetch the product name and price
-    db.query('SELECT name, price FROM products WHERE id = ?', [productId], (err, productResult) => {
+    db.query('SELECT product_name, price FROM products WHERE productID = ?', [productId], (err, productResult) => {
       if (err) {
+        console.error('Database error (products):', err);
         return res.status(500).json({ error: 'Error fetching product data' });
       }
 
-      const { name, price } = productResult[0];
+      if (!productResult || productResult.length === 0) {
+        console.log('No product found for productId:', productId);
+        return res.status(404).json({ error: 'Product not found' });
+      }
+
+      const { product_name, price } = productResult[0];
+
+      // Get buyer name from session or localStorage
+      
 
       // Prepare the bill details response
       const billDetails = {
         from: sellerName,
-        to: 'Buyer Name', // Assuming the buyer's name is stored elsewhere
-        product: name,
+        
+        product: product_name,
         price: price,
         totalAmount: price
       };
 
+      console.log('Sending bill details:', billDetails);
       res.json(billDetails);
     });
   });
 });
+
 
 
 
