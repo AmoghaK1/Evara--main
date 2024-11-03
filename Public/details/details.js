@@ -2,11 +2,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   const productId = urlParams.get('id');
   const buttonContainer = document.getElementsByClassName("buttons")[0]; // Corrected line
+  const userData = JSON.parse(localStorage.getItem('userData'));
   
   buttonContainer.innerHTML = `
-    <a href="/Buy/Payment.html?productId=${productId}"><button class="buy">Buy</button></a>
+    <a href="#" id="buyLink"><button class="buy">Buy</button></a>
     <button class="contact" id="contact">Contact Seller</button>
   `;
+
+  const buyLink = document.getElementById('buyLink');
+  const buyBtn = document.getElementsByClassName("buy")[0];
+  
+  if (!userData) { // Check if user data is missing in localStorage (user is not logged in)
+    buyBtn.addEventListener('click', (event) => {
+      event.preventDefault(); // Prevents the button from redirecting
+      alert("Please login to continue...!");
+    });
+  } else {
+    // If user is logged in, allow redirection to the payment page
+    buyLink.href = `/Buy/Payment.html?productId=${productId}`;
+  }
   
   fetch(`http://localhost:3000/api/products/${productId}`)
     .then(response => response.json())
@@ -28,17 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <p>Status: ${item.status}</p>
         `;
 
-        const cancelButton = document.getElementById('cancel-button');
-        cancelButton.addEventListener('click', () => {
-          removeProductId();
-          window.history.back();
-        });
-
-        const backButton = document.getElementById('back-button');
-        backButton.addEventListener('click', () => {
-          removeProductId();
-          window.history.back();
-        });
+        
 
         const contactSellerButton = document.getElementById('contact-seller-button');
         contactSellerButton.addEventListener('click', () => {
