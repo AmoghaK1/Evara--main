@@ -4,8 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment | Evara</title>
+    <link rel="stylesheet" href="final_payment.css">
 </head>
 <body>
-    Payment here
+    <div class="container">
+        <h1>Payment Confirmation</h1>
+        <form id="paymentForm" enctype="multipart/form-data">
+            <div class="qr-container">
+                <!-- Replace with your QR code image -->
+                <img src="/qr-code.png" alt="Payment QR Code">
+            </div>
+            
+            <div class="phone-number">
+                Phone: +1 234 567 8900
+            </div>
+            
+            <div class="form-group">
+                <label>Upload Payment Screenshot:</label>
+                <input type="file" accept="image/*" class="file-input" id="screenshot" required>
+            </div>
+            
+            <button type="submit" class="submit-btn">Submit Payment Proof</button>
+        </form>
+        
+        <a href="#" class="back-link">Back to Payment Methods</a>
+    </div>
+    <script>
+        document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('screenshot', document.getElementById('screenshot').files[0]);
+            
+            try {
+                const response = await fetch('/api/upload-payment', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    alert('Payment proof uploaded successfully!');
+                    // Redirect or show success message
+                } else {
+                    alert('Failed to upload payment proof');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while uploading');
+            }
+        });
+    </script>
 </body>
 </html>
