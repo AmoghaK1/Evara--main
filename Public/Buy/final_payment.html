@@ -9,19 +9,18 @@
 <body>
     <div class="container">
         <h1>Payment Confirmation</h1>
-        <form id="paymentForm" enctype="multipart/form-data">
+        <form id="paymentForm" enctype="multipart/form-data" method="post">
             <div class="qr-container">
-                <!-- Replace with your QR code image -->
-                <img src="/qr-code.png" alt="Payment QR Code">
+                <img src="/Buy/qr_code.jpeg" alt="Payment QR Code">
             </div>
             
             <div class="phone-number">
-                Phone: +1 234 567 8900
+                Phone: +91 9175185629
             </div>
             
             <div class="form-group">
                 <label>Upload Payment Screenshot:</label>
-                <input type="file" accept="image/*" class="file-input" id="screenshot" required>
+                <input type="file" accept="image/*" class="file-input" name="image" id="image" required>
             </div>
             
             <button type="submit" class="submit-btn">Submit Payment Proof</button>
@@ -30,29 +29,14 @@
         <a href="#" class="back-link">Back to Payment Methods</a>
     </div>
     <script>
-        document.getElementById('paymentForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const formData = new FormData();
-            formData.append('screenshot', document.getElementById('screenshot').files[0]);
-            
-            try {
-                const response = await fetch('/api/upload-payment', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                if (response.ok) {
-                    alert('Payment proof uploaded successfully!');
-                    // Redirect or show success message
-                } else {
-                    alert('Failed to upload payment proof');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred while uploading');
-            }
-        });
-    </script>
+        // Get the query parameters from the URL
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('productId');
+        const method = params.get('method');
+        const user = params.get('user');
+      
+        // Update the form action to include the query parameters
+        document.getElementById('paymentForm').action = `/finalPayment?productId=${productId}&method=${method}&user=${user}`;
+      </script>
 </body>
 </html>

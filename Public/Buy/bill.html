@@ -103,7 +103,7 @@ function proceedToPayment() {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('productId');
     // Add your payment navigation logic here
-    window.location.href = `/Buy/final_payment.html?productId=${productId}`;
+    window.location.href = `/Buy/final_payment.html?productId=${productId}&method=UPI&user=${buyerName}`;
 }
     </script>
 </body>

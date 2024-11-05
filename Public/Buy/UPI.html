@@ -59,7 +59,7 @@
                 // Verify data exists before proceeding
                 if (username && email) {
                     // Redirect to billing page
-                    window.location.href = `/Buy/bill.html?productId=${productId}`;
+                    window.location.href = `/Buy/bill.html?productId=${productId}&method=UPI`;
                 } else {
                     alert('Please log in to continue');
                     window.location.href = '/Login/login.html';

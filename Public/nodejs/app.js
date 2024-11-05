@@ -165,12 +165,74 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
       folder: 'evara_userImages',  // Specify folder in Cloudinary
-      allowedFormats: ['jpeg', 'png', 'jpg']
+      allowedFormats: ['jpeg', 'png', 'jpg'],
+      public_id: (req,file) => path.parse(file.originalname).name
   }
 });
 
 // Initialize Multer
 const upload = multer({ storage });
+
+
+
+app.post('/finalPayment', upload.single('image'), (req, res) => {
+  // Access query parameters from req.query
+  const productId = req.query.productId;  // Access productId from query string
+  const payMethod = req.query.method;     // Access method from query string
+  const user = req.query.user;            // Access user from query string
+
+  // The URL of the uploaded image on Cloudinary
+  const imageURL = req.file.path;
+  console.log(productId,payMethod,user);
+  // Fetch sellerID based on productID
+  db.query('SELECT sellerID FROM sellers WHERE productID = ?', [productId], (err, sellerResult) => {
+    if (err) {
+      console.error('Database error (sellers):', err);
+      return res.status(500).json({ error: 'Error fetching seller data' });
+    }
+    if (!sellerResult || sellerResult.length === 0) {
+      console.log('No seller found for productId:', productId);
+      return res.status(404).json({ error: 'Seller not found' });
+    }
+
+    const sellerId = sellerResult[0].sellerID;
+
+    // Fetch userID based on username
+    db.query('SELECT userID FROM users WHERE username = ?', [user], (err, userResult) => {
+      if (err) {
+        console.error('Database error (userid):', err);
+        return res.status(500).json({ error: 'Error fetching buyer data' });
+      }
+      if (!userResult || userResult.length === 0) {
+        console.log('No user found for username:', user);
+        return res.status(404).json({ error: 'User not found' });
+      }
+
+      const buyerId = userResult[0].userID;
+
+      // Insert the transaction into the database
+      db.query(
+        'INSERT INTO transactions (sellerID, buyerID, productID, payment_method, payment_screenshot) VALUES (?, ?, ?, ?, ?)',
+        [sellerId, buyerId, productId, payMethod, imageURL],
+        (err, finalResult) => {
+          if (err) {
+            console.error('Transaction insertion failed:', err);
+            return res.status(500).json({ error: 'Transaction insertion failed' });
+          }
+
+          console.log('Transaction successful:', finalResult);
+          return res.redirect('/Buy/thankyou.html');
+        }
+      );
+    });
+  });
+});
+
+
+
+
+
+
 app.post('/SELL', upload.single('image'), (req, res) => {
   // Retrieve the product details from the form
   let prodName = req.body.productName;
