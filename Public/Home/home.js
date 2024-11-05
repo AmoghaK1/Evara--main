@@ -1,49 +1,4 @@
 // On window load, check if the user is logged in via the session
-//  window.onload = function() {
-//   // Fetch the session data to check if the user is logged in
-//   fetch('http://localhost:3000/session')
-//     .then(response => response.json())
-//     .then(data => {
-//       const userSection = document.getElementsByClassName('bellandlogin');
-//       console.log(data.loggedIn);
-//       if (data.loggedIn) {
-//         // User is logged in, replace login button with profile picture
-//         userSection.innerHTML = `
-//           <img src="${data.profilePicture}" alt="Profile Picture" id="pfp" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer;" />
-//         `;
-        
-//         // Add event listener to redirect to profile page on profile picture click
-//         document.getElementById('pfp').addEventListener('click', function() {
-//           window.location.href = '/profile';
-//         });
-//       } else {
-//         // User is not logged in, keep the login button
-//         userSection.innerHTML = `
-//           <a class="btn btn-light" href="/Login/login.html" role="button" style="font-size: 0.70rem; height: 2rem; transform: rotate(-0.61deg); transform-origin: 0 0; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 40px; backdrop-filter: blur(4px)">Login In</a>
-//         `;
-//       }
-//     });
-// }; 
-function showAlert(message) {
-  const alertBox = document.getElementById('custom-alert');
-  document.getElementById('alert-message').innerText = message;
-  alertBox.style.display = 'block';
-  alertBox.classList.remove('fade-out');
-  alertBox.classList.add('fade-in');
-}
-
-function closeAlert() {
-  const alertBox = document.getElementById('custom-alert');
-  alertBox.classList.remove('fade-in');
-  alertBox.classList.add('fade-out');
-
-  // Hide the popup after the fade-out animation completes
-  setTimeout(() => {
-    alertBox.style.display = 'none';
-  }, 500); // Match this duration to the fade-out animation duration
-}
-
-
 window.onload = async function() {
   const urlParams = new URLSearchParams(window.location.search);
   const status = urlParams.get('status');
@@ -76,6 +31,9 @@ window.onload = async function() {
           <a class="btn btn-light" href="/Login/login.html" role="button" style="font-size: 0.70rem; height: 2rem; width: 4.7rem; transform: rotate(-0.61deg); transform-origin: 0 0; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 40px; backdrop-filter: blur(4px)">Login In</a>
     `;
   }
+
+  // Initial load of all products
+  await loadProducts();
 };
 
 function showAlert(message) {
@@ -124,25 +82,196 @@ function displayProducts(products) {
 }
 
 // Initial load of all products
-fetch('/api/products')
-  .then(response => response.json())
-  .then(data => displayProducts(data))
-  .catch(error => console.error('Error loading products:', error));
+async function loadProducts() {
+  try {
+    const response = await fetch('/api/products');
+    const data = await response.json();
+    displayProducts(data);
+  } catch (error) {
+    console.error('Error loading products:', error);
+  }
+}
 
 // Handle search
-function handleSearch(event) {
+document.getElementById('search-form').addEventListener('submit', async function(event) {
   event.preventDefault();
   
   const searchQuery = document.getElementById("search-query").value;
   const locationQuery = document.getElementById("location-input").value;
   const queryString = `search=${encodeURIComponent(searchQuery)}&location=${encodeURIComponent(locationQuery)}`;
   
-  fetch(`/api/search?${queryString}`)
-    .then(response => response.json())
-    .then(data => displayProducts(data)) // Use the same display function
-    .catch(error => console.error("Error fetching search results:", error));
-}
+  try {
+    const response = await fetch(`/api/search?${queryString}`);
+    const data = await response.json();
+    displayProducts(data);
+  } catch (error) {
+    console.error("Error fetching search results:", error);
+  }
+});
 
+function populateSearch(item) {
+  document.getElementById('search-query').value = item;
+  document.getElementById('search-form').dispatchEvent(new Event('submit'));
+}
+// On window load, check if the user is logged in via the session
+//  window.onload = function() {
+//   // Fetch the session data to check if the user is logged in
+//   fetch('http://localhost:3000/session')
+//     .then(response => response.json())
+//     .then(data => {
+//       const userSection = document.getElementsByClassName('bellandlogin');
+//       console.log(data.loggedIn);
+//       if (data.loggedIn) {
+//         // User is logged in, replace login button with profile picture
+//         userSection.innerHTML = `
+//           <img src="${data.profilePicture}" alt="Profile Picture" id="pfp" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer;" />
+//         `;
+        
+//         // Add event listener to redirect to profile page on profile picture click
+//         document.getElementById('pfp').addEventListener('click', function() {
+//           window.location.href = '/profile';
+//         });
+//       } else {
+//         // User is not logged in, keep the login button
+//         userSection.innerHTML = `
+//           <a class="btn btn-light" href="/Login/login.html" role="button" style="font-size: 0.70rem; height: 2rem; transform: rotate(-0.61deg); transform-origin: 0 0; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 40px; backdrop-filter: blur(4px)">Login In</a>
+//         `;
+//       }
+//     });
+
+// }; 
+// function showAlert(message) {
+//   const alertBox = document.getElementById('custom-alert');
+//   document.getElementById('alert-message').innerText = message;
+//   alertBox.style.display = 'block';
+//   alertBox.classList.remove('fade-out');
+//   alertBox.classList.add('fade-in');
+// }
+
+// function closeAlert() {
+//   const alertBox = document.getElementById('custom-alert');
+//   alertBox.classList.remove('fade-in');
+//   alertBox.classList.add('fade-out');
+
+//   // Hide the popup after the fade-out animation completes
+//   setTimeout(() => {
+//     alertBox.style.display = 'none';
+//   }, 500); // Match this duration to the fade-out animation duration
+// }
+
+
+
+// window.onload = async function() {
+//   const urlParams = new URLSearchParams(window.location.search);
+//   const status = urlParams.get('status');
+//   const user = urlParams.get('user');
+//   const flag = urlParams.get('flag');
+
+//   if (status === 'loggedin' && user) {
+//     const userSection = document.getElementById('user-section');
+//     userSection.innerHTML = `
+//           <img src="/ImagesHome/pfp_final_1.png" alt="Profile Picture" id="pfp" style="width: 40px; height: 40px; margin-right: 1rem; margin-left: 1.75rem; border-radius: 50%; cursor: pointer;" />
+//           <a class="btn btn-light" href="/Sell/sell.html" role="button" style="font-size: 0.86rem; width:6rem; height: 2.2rem; transform: rotate(-0.61deg); transform-origin: 0 0; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 40px; backdrop-filter: blur(4px)">Sell</a>
+//     `;
+
+//     // Show custom alert
+//     if(flag === '0'){
+//       showAlert(`Welcome back, ${user}!`);
+//     } else if(flag === '1'){
+//       showAlert('Product Uploaded Successfully!');
+//     }
+
+//     // Add event listener to redirect to profile page on profile picture click
+//     document.getElementById('pfp').addEventListener('click', function() {
+//       window.location.href = '/profile';
+//     });
+//   }
+
+//   if (status === 'open') {
+//     const userSection = document.getElementById('user-section');
+//     userSection.innerHTML = `
+//           <a class="btn btn-light" href="/Login/login.html" role="button" style="font-size: 0.70rem; height: 2rem; width: 4.7rem; transform: rotate(-0.61deg); transform-origin: 0 0; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 40px; backdrop-filter: blur(4px)">Login In</a>
+//     `;
+//   }
+// };
+
+// function showAlert(message) {
+//   document.getElementById('alert-message').innerText = message;
+//   document.getElementById('custom-alert').style.display = 'block';
+// }
+
+// function closeAlert() {
+//   document.getElementById('custom-alert').style.display = 'none';
+// }
+
+// // Function to create product box HTML (reusable for both initial load and search)
+// function createProductBox(item) {
+//   const itemDiv = document.createElement('div');
+//   itemDiv.className = 'item';
+  
+//   itemDiv.innerHTML = `
+//     <img src="${item.product_image}" alt="Product Image"> 
+//     <h3>${item.product_name}</h3>
+//     <p class="item-description">
+//       ${item.short_description}...<a href="/details/product-details.html?id=${item.productID}" class="read-more">Read more</a>
+//     </p>
+//     <p>Price: ${item.price}</p>
+//     <p>Category: ${item.product_category}</p>
+//     <p>Location: ${item.location}</p>
+//     <p>Status: ${item.status}</p>
+//   `;
+  
+//   return itemDiv;
+// }
+
+// // Function to display products in the container
+// function displayProducts(products) {
+//   const itemsContainer = document.getElementById('items-container');
+//   itemsContainer.innerHTML = ''; // Clear existing content
+  
+//   if (products.length === 0) {
+//     itemsContainer.innerHTML = '<p>No matching products found.</p>';
+//     return;
+//   }
+  
+//   products.forEach(item => {
+//     const itemDiv = createProductBox(item);
+//     itemsContainer.appendChild(itemDiv);
+//   });
+// }
+
+// // Initial load of all products
+// async function loadProducts() {
+//   try {
+//     const response = await fetch('/api/products');
+//     const data = await response.json();
+//     displayProducts(data);
+//   } catch (error) {
+//     console.error('Error loading products:', error);
+//   }
+// }
+
+// // Handle search
+// document.getElementById('search-form').addEventListener('submit', async function(event) {
+//   event.preventDefault();
+  
+//   const searchQuery = document.getElementById("search-query").value;
+//   const locationQuery = document.getElementById("location-input").value;
+//   const queryString = `search=${encodeURIComponent(searchQuery)}&location=${encodeURIComponent(locationQuery)}`;
+  
+//   try {
+//     const response = await fetch(`/api/search?${queryString}`);
+//     const data = await response.json();
+//     displayProducts(data);
+//   } catch (error) {
+//     console.error("Error fetching search results:", error);
+//   }
+// });
+
+// function populateSearch(item) {
+//   document.getElementById('search-query').value = item;
+//   document.getElementById('search-form').dispatchEvent(new Event('submit'));
+// }
 
 // fetch('http://localhost:3000/api/products')
 //       .then(response => response.json())
