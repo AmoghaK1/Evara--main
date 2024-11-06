@@ -1,0 +1,336 @@
+/* Import fonts */
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Bree+Serif&display=swap");
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #e9e9e9;
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+}
+
+/* Header Styles */
+header {
+  background-color: #E40046;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.logo a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #ffcdd2;
+}
+
+/* Profile Header Section */
+.profile-header {
+  background: #fff;
+  display: flex;
+  height: 190px;
+  position: relative;
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+}
+
+.profile-img {
+  width: 340px;
+  height: 200px;
+}
+
+.profile-img img {
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  left: 50px;
+  top: 20px;
+  z-index: 5;
+  background: #fff;
+}
+
+/* Profile Navigation Info */
+.profile-nav-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 60px;
+}
+
+.profile-nav-info h3 {
+  font-variant: small-caps;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Profile Side Section */
+.profile-side {
+  position: absolute;
+  width: 300px;
+  background: #fff;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+  padding: 90px 30px 20px;
+  font-family: "Bree Serif", serif;
+  z-index: 99;
+}
+
+.profile-side p {
+  margin-bottom: 7px;
+  color: #333;
+  font-size: 14px;
+}
+
+.profile-side p i {
+  color: #E40046;
+  margin-right: 10px;
+}
+
+/* Button Styles */
+.profile-btn {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chatbtn,
+.createbtn {
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 3px;
+  background: #E40046;
+  color: #fff;
+  font-family: "Bree Serif", serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  box-shadow: 0 5px 7px rgba(0, 0, 0, 0.3);
+}
+
+.chatbtn:hover,
+.createbtn:hover {
+  background: rgba(228, 0, 70, 0.9);
+}
+
+/* Main Content Area */
+.main-bd {
+  width: 100%;
+  display: flex;
+  padding-right: 15px;
+}
+
+.right-side {
+  margin-left: 300px;
+  width: calc(100% - 300px);
+}
+
+/* Navigation Tabs */
+.nav ul {
+  display: flex;
+  list-style: none;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.nav ul li {
+  padding: 10px;
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav ul li.active {
+  box-shadow: 0 -3px 0 #E40046 inset;
+  font-weight: 600;
+}
+
+.nav ul li:hover {
+  box-shadow: 0 -3px 0 rgba(228, 0, 70, 0.9) inset;
+}
+
+/* Orders Section */
+.tab {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Card Styles */
+.card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 1rem;
+}
+
+.card-title {
+  color: #2d3748;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-description {
+  color: #4a5568;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Mobile Menu */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.bar {
+  height: 3px;
+  width: 25px;
+  background: #fff;
+  transition: 0.3s ease;
+}
+
+/* Responsive Styles */
+@media (max-width: 1100px) {
+  .profile-side {
+    width: 250px;
+  }
+  
+  .right-side {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+  }
+
+  .profile-img img {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+    margin: 0 20px;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    height: auto;
+    text-align: center;
+    padding-bottom: 20px;
+  }
+
+  .profile-img {
+    width: 100%;
+    height: 200px;
+  }
+
+  .profile-img img {
+    position: relative;
+    left: 0;
+  }
+
+  .profile-nav-info {
+    text-align: center;
+  }
+
+  .main-bd {
+    flex-direction: column;
+    padding-right: 0;
+  }
+
+  .profile-side {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .right-side {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #E40046;
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+}
+
+/* Loading and Error States */
+.loading,
+.error,
+.no-orders {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  background: #f7fafc;
+  border-radius: 8px;
+}
+
+.error {
+  background: #fff5f5;
+  color: #c53030;
+}
+
+/* IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII */
+
+

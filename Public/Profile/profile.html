@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile | Evara</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="profile-style.css">
+    <!-- <link rel="stylesheet" href="styles-pfp2.css"> -->
+    <style>
+        /* Add these styles to match the new card structure */
+        
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="#">Evara</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="profile-header">
+            <div class="profile-img">
+                <img src="/ImagesHome/pfp_final_1.png" alt="Profile Image">
+            </div>
+            <div class="profile-nav-info">
+                <h3 class="user-name"></h3>
+            </div>
+            <div class="profile-option">
+                <div class="notification">
+                    <i class="fa fa-bell"></i>
+                    <span class="alert-message">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-bd">
+            <div class="profile-side">
+                <p class="mobile-no"><i class="fa fa-phone"></i></p>
+                <p class="user-mail"><i class="fa fa-envelope"></i></p>
+                <div class="user-bio">
+                    <h3>Bio</h3>
+                    <p class="bio">User bio goes here...</p>
+                </div>
+                <div class="profile-btn">
+                    <button class="chatbtn" id="chatBtn"><i class="fa fa-comment"></i> Chat</button>
+                </div>
+            </div>
+
+            <div class="right-side">
+                <div class="nav">
+                    <ul>
+                        <li><a class="active" id="orders-tab">Your Orders</a></li>
+                    </ul>
+                </div>
+                <div class="content">
+                    <!-- Orders Section -->
+                    <div class="tab" id="orders-section">
+                        <!-- Orders will be populated here by JavaScript -->
+                        <div class="loading">Loading orders...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    </script>
+    <script src="profile-script.js"></script>
+</body>
+</html>
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="profile-style.css"> 
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="#">Evara</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+<div class="container">
+    <div class="profile-header">
+        <div class="profile-img">
+            <img src="/ImagesHome/pfp_final_1.png" alt="Profile Image">
+        </div>
+        <div class="profile-nav-info">
+            <h3 class="user-name">User Name</h3>
+            
+        </div>
+        <div class="profile-option">
+            <div class="notification">
+                <i class="fa fa-bell"></i>
+                <span class="alert-message">0</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-bd">
+        <div class="profile-side">
+            <p class="mobile-no"><i class="fa fa-phone"></i> +91-1234567890</p>
+            <p class="user-mail"><i class="fa fa-envelope"></i> abc@gmail.com</p>
+            <div class="user-bio">
+                <h3>Bio</h3>
+                <p class="bio">User bio goes here...</p>
+            </div>
+            <div class="profile-btn">
+                <button class="chatbtn" id="chatBtn"><i class="fa fa-comment"></i> Chat</button>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <div class="nav">
+                <ul>
+                    <li><a class="active" id="orders-tab">Your Orders</a></li>
+                    
+                </ul>
+            </div>
+            <div class="content">
+            <div class="tab" id="orders-section">
+                <div class="card">
+                    <img src="wall2.jpeg" alt="Card Image" class="card-img">
+                    <div class="card-content">
+                        <h3 class="card-title">Mountain</h3>
+                        <p class="card-description">A mountain is a landform that is much higher than the surrounding land, with steep sides and a sharp or rounded peak</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="wall2.jpeg" alt="Card Image" class="card-img">
+                    <div class="card-content">
+                        <h3 class="card-title">Mountain</h3>
+                        <p class="card-description">A mountain is a landform that is much higher than the surrounding land, with steep sides and a sharp or rounded peak</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="wall2.jpeg" alt="Card Image" class="card-img">
+                    <div class="card-content">
+                        <h3 class="card-title">Mountain</h3>
+                        <p class="card-description">A mountain is a landform that is much higher than the surrounding land, with steep sides and a sharp or rounded peak</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="wall2.jpeg" alt="Card Image" class="card-img">
+                    <div class="card-content">
+                        <h3 class="card-title">Mountain</h3>
+                        <p class="card-description">A mountain is a landform that is much higher than the surrounding land, with steep sides and a sharp or rounded peak</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="wall2.jpeg" alt="Card Image" class="card-img">
+                    <div class="card-content">
+                        <h3 class="card-title">Mountain</h3>
+                        <p class="card-description">A mountain is a landform that is much higher than the surrounding land, with steep sides and a sharp or rounded peak</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="wall2.jpeg" alt="Card Image" class="card-img">
+                    <div class="card-content">
+                        <h3 class="card-title">Mountain</h3>
+                        <p class="card-description">A mountain is a landform that is much higher than the surrounding land, with steep sides and a sharp or rounded peak</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="wall2.jpeg" alt="Card Image" class="card-img">
+                    <div class="card-content">
+                        <h3 class="card-title">Mountain</h3>
+                        <p class="card-description">A mountain is a landform that is much higher than the surrounding land, with steep sides and a sharp or rounded peak</p>
+                    </div>
+                </div>
+            </div>
+            <div class="tab" id="prevorders-section" style="display: none;">
+                <div class="full-tab">
+                <div class="card">
+                    <img src="wall2.jpeg" alt="Card Image" class="card-img">
+                    <div class="card-content">
+                        <h3 class="card-title">Mountain</h3>
+                        <p class="card-description">A mountain is a landform that is much higher than the surrounding land, with steep sides and a sharp or rounded peak</p>
+                    </div>
+                </div>
+                </div>
+              </div>
+              </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+
+    menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+</script>
+<script src="profile-script.js"></script>
+</body>
+</html> -->

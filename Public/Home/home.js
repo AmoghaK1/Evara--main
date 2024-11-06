@@ -21,7 +21,7 @@ window.onload = async function() {
 
     // Add event listener to redirect to profile page on profile picture click
     document.getElementById('pfp').addEventListener('click', function() {
-      window.location.href = '/profile';
+      window.location.href = `/Profile/profile.html?status=loggedin&user=${user}`;
     });
   }
 

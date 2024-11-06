@@ -431,8 +431,86 @@ app.post('/login', (req, res) => {
   );
 });
 
+app.get('/profile', (req, res) => {
+  const username = req.query.user;
+  
+  if (!username) {
+    return res.status(400).json({ error: 'Username is required' });
+  }
+
+  // This query joins the necessary tables to get all orders for a user
+  const query = `
+    SELECT 
+      t.transactionID,
+      p.productID,
+      p.product_name,
+      p.product_category,
+      LEFT(p.product_desc, 100) AS short_description,
+      p.price,
+      p.location,
+      p.status,
+      p.product_image,
+      s.username AS seller_name,
+      t.processed_at
+    FROM transactions t
+    JOIN users u ON t.buyerID = u.userID
+    JOIN products p ON t.productID = p.productID
+    JOIN sellers s ON t.sellerID = s.sellerID
+    WHERE u.username = ?
+    ORDER BY t.processed_at DESC
+  `;
+
+  db.query(query, [username], (err, results) => {
+    if (err) {
+      console.error('Database error:', err);
+      return res.status(500).json({ error: 'Error fetching orders' });
+    }
+
+    if (!results || results.length === 0) {
+      return res.status(200).json({ orders: [] });
+    }
+
+    return res.status(200).json({ orders: results });
+  });
+});
+// app.get('/profile', (req,res) => {
+//   const username = req.query.user;
+//   console.log(username);
+//   if(!username){
+//     console.log("username not readable")
+//   }
+
+//   db.query('SELECT username from sellers where sellerID = (SELECT sellerID from transactions where buyerID = (SELECT userID from users where username = ?))', [username], (err,res) => {
+//     if(err){
+//       console.error('Database error(username): ',err);
+//       return res.status(500).json({error: 'Error fetching data!!'});
+//     }
+//     if(!res || res.length===0){
+//       console.log('No user found for this buyerid:', username);
+//       return res.status(404).json({ error: 'user not found' });
+//     }
+//     const sellerName = res[0].username;
+
+//     db.query('SELECT productID, product_name,product_category,LEFT(product_desc,20) AS short_description, price, location, status, product_image FROM products where productID = (SELECT productID from sellers where username = ?)',[sellerName], (err,prodResult) => {
+//       if (err) {
+//         return res.status(500).json({ error: 'Database query failed' });
+//       }
+
+//       const { productID,product_name,product_category,short_description,price,location,status,product_image } = prodResult[0];
+
+//       const orderHistory = {
+//         seller: sellerName,
+        
+//       }
+
+//     })
 
 
+
+//   })
+
+
+// })
 
 
 
