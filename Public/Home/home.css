@@ -339,6 +339,7 @@
     height: auto;
     border-radius: 4px;
     margin-bottom: 10px;
+    max-height: 250px;
   }
   
   /* Responsive text styling */
