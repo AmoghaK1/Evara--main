@@ -1,40 +1,139 @@
 // On window load, check if the user is logged in via the session
-window.onload = async function() {
+
+function updateUserSection() {
+  const loginStatus = localStorage.getItem('loginStatus') || 'open';
+  const user = localStorage.getItem('user');
+  const flag = localStorage.getItem('flag') || '0';
+  const userSection = document.getElementById('user-section');
+
+  if (loginStatus === 'loggedin' && user) {
+      userSection.innerHTML = `
+          <img src="/ImagesHome/pfp_final_1.png" 
+               alt="Profile Picture" 
+               id="pfp" 
+               style="width: 40px; 
+                      height: 40px; 
+                      margin-right: 1rem; 
+                      margin-left: 1.75rem; 
+                      border-radius: 50%; 
+                      cursor: pointer;" />
+          <a class="btn btn-light" 
+             href="/Sell/sell.html" 
+             role="button" 
+             style="font-size: 0.86rem; 
+                    width:6rem; 
+                    height: 2.2rem; 
+                    margin-right: 1rem;
+                    transform: rotate(-0.61deg); 
+                    transform-origin: 0 0; 
+                    background: white; 
+                    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
+                    border-radius: 40px; 
+                    backdrop-filter: blur(4px)">Sell</a>
+          <a class="btn btn-light" 
+             href="#" 
+             id="logout-btn"
+             role="button" 
+             style="font-size: 0.86rem; 
+                    width:6rem; 
+                    height: 2.2rem; 
+                    transform: rotate(-0.61deg); 
+                    transform-origin: 0 0; 
+                    background: white; 
+                    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
+                    border-radius: 40px; 
+                    backdrop-filter: blur(4px)">Logout</a>
+      `;
+
+      // Show custom alert
+      if(flag === '0') {
+          showAlert(`Welcome back, ${user}!`);
+      } else if(flag === '1') {
+          showAlert('Product Uploaded Successfully!');
+          localStorage.setItem('flag', '0');
+      }
+
+      // Add profile click handler
+      document.getElementById('pfp').addEventListener('click', function() {
+          window.location.href = `/Profile/profile.html?status=loggedin&user=${user}`;
+      });
+
+      // Add logout handler
+      document.getElementById('logout-btn').addEventListener('click', function(e) {
+          e.preventDefault();
+          handleLogout();
+          window.location.href = 'home-live.html';
+      });
+  } else {
+      userSection.innerHTML = `
+          <a class="btn btn-light" 
+             href="/Login/login.html" 
+             role="button" 
+             style="font-size: 0.70rem; 
+                    height: 2rem; 
+                    width: 4.7rem; 
+                    transform: rotate(-0.61deg); 
+                    transform-origin: 0 0; 
+                    background: white; 
+                    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
+                    border-radius: 40px; 
+                    backdrop-filter: blur(4px)">Login In</a>
+      `;
+  }
+}
+
+// Function to handle logout
+function handleLogout() {
+  localStorage.removeItem('loginStatus');
+  localStorage.removeItem('user');
+  localStorage.removeItem('flag');
+  showAlert('Logged out successfully!');
+}
+
+// Initialize the page
+async function initializePage() {
+  // Check URL parameters for initial load
   const urlParams = new URLSearchParams(window.location.search);
-  const status = urlParams.get('status');
-  const user = urlParams.get('user');
-  const flag = urlParams.get('flag');
+  const statusParam = urlParams.get('status');
+  const userParam = urlParams.get('user');
+  const flagParam = urlParams.get('flag');
 
-  if (status === 'loggedin' && user) {
-    const userSection = document.getElementById('user-section');
-    userSection.innerHTML = `
-          <img src="/ImagesHome/pfp_final_1.png" alt="Profile Picture" id="pfp" style="width: 40px; height: 40px; margin-right: 1rem; margin-left: 1.75rem; border-radius: 50%; cursor: pointer;" />
-          <a class="btn btn-light" href="/Sell/sell.html" role="button" style="font-size: 0.86rem; width:6rem; height: 2.2rem; transform: rotate(-0.61deg); transform-origin: 0 0; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 40px; backdrop-filter: blur(4px)">Sell</a>
-    `;
-
-    // Show custom alert
-    if(flag === '0'){
-      showAlert(`Welcome back, ${user}!`);
-    } else if(flag === '1'){
-      showAlert('Product Uploaded Successfully!');
-    }
-
-    // Add event listener to redirect to profile page on profile picture click
-    document.getElementById('pfp').addEventListener('click', function() {
-      window.location.href = `/Profile/profile.html?status=loggedin&user=${user}`;
-    });
+  // Update localStorage if URL parameters exist
+  if (statusParam && userParam) {
+      localStorage.setItem('loginStatus', statusParam);
+      localStorage.setItem('user', userParam);
+      if (flagParam) {
+          localStorage.setItem('flag', flagParam);
+      }
   }
 
-  if (status === 'open') {
-    const userSection = document.getElementById('user-section');
-    userSection.innerHTML = `
-          <a class="btn btn-light" href="/Login/login.html" role="button" style="font-size: 0.70rem; height: 2rem; width: 4.7rem; transform: rotate(-0.61deg); transform-origin: 0 0; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 40px; backdrop-filter: blur(4px)">Login In</a>
-    `;
-  }
+  // Update the user section
+  updateUserSection();
 
-  // Initial load of all products
-  await loadProducts();
-};
+  // Load products if the function exists
+  if (typeof loadProducts === 'function') {
+      await loadProducts();
+  }
+}
+
+// Function to handle login
+function handleLogin(username) {
+  localStorage.setItem('loginStatus', 'loggedin');
+  localStorage.setItem('user', username);
+  localStorage.setItem('flag', '0');
+  updateUserSection();
+}
+
+// Helper function for showing alerts (if you don't have one already)
+function showAlert(message) {
+  // You can customize this based on your alert implementation
+  alert(message);
+  // Or if you have a custom alert function, use that instead
+  // customAlert(message);
+}
+
+// Call initializePage when the DOM is loaded
+document.addEventListener('DOMContentLoaded', initializePage);
 
 function showAlert(message) {
   document.getElementById('alert-message').innerText = message;

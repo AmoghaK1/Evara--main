@@ -1,3 +1,46 @@
+.logout-btn {
+  font-size: 0.86rem;
+  width: 6rem;
+  height: 2.2rem;
+  background: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 40px;
+  backdrop-filter: blur(4px);
+}
+
+/* Hide the logout button in smaller screens */
+@media (max-width: 768px) {
+  .logout-btn.d-none {
+      display: none;
+  }
+}
+
+/* Ensure dropdown menu is responsive */
+.dropdown-menu {
+  min-width: auto;
+  text-align: left;
+}
+
+
+.dropdown-menu {
+  min-width: 160px;
+  padding: 0.5rem 0;
+  margin: 0.125rem 0 0;
+  background-color: white;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 0.25rem;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175);
+}
+
+.dropdown-item {
+  padding: 0.5rem 1.5rem;
+  font-size: 0.9rem;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}
+
 .evara-logo {
     height: 1.95em;
     width: auto;

@@ -356,7 +356,9 @@
   .navbar {
     background-color: rgba(252,186,210,47%);
     height: 3.5rem;
-  
+  }
+  .navbar-navs{
+    padding-right: 50px;  
   }
   .btn {
     margin-right: 5%;
