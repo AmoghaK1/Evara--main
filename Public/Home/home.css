@@ -127,7 +127,88 @@
 .navbar-texts {
     padding-left: 5rem;
 }
+   /* Toggle Menu Styles */
+   .user-toggle-container {
+    position: relative;
+}
 
+.toggle-btn {
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.toggle-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.toggle-btn.active {
+    transform: rotate(90deg);
+    background-color: #f0f0f0;
+}
+
+.toggle-icon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+.toggle-btn.active .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    width: 120px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-item:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.dropdown-item:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
 
 .signup-btn {
     display: flex;
