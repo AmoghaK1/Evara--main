@@ -33,7 +33,7 @@ app.use(session({
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',       // Replace with your MySQL username
-  password: 'Amogha123', // Replace with your MySQL password
+  password: 'Vedmysql@007', // Replace with your MySQL password
   database: 'evaradb'
 });
 
