@@ -22,7 +22,6 @@ function updateUserSection() {
                           border-radius: 40px; 
                           backdrop-filter: blur(4px)">Sell</a>
                 <a class="btn btn-light" 
-                   
                    id="logout-btn"
                    role="button" 
                    style="font-size: 0.86rem; 
