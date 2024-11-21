@@ -8,7 +8,16 @@ function updateUserSection() {
 
   if (loginStatus === 'loggedin' && user) {
     userSection.innerHTML = `
-        <div class="user-toggle-container">
+    <img src="/ImagesHome/pfp_final_1.png" 
+               alt="Profile Picture" 
+               id="pfp" onclick="window.location.href='/Profile/profile.html?loginStatus=loggedin&user=${user}';"
+               style="width: 40px; 
+                      height: 40px; 
+                      margin-right: 1rem; 
+                      margin-left: 1.75rem; 
+                      border-radius: 50%; 
+                      cursor: pointer;" />    
+    <div class="user-toggle-container">
             <button class="toggle-btn" id="toggle-menu-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" class="toggle-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -32,7 +41,7 @@ function updateUserSection() {
     // Toggle Menu Button
     const toggleBtn = document.getElementById('toggle-menu-btn');
     const dropdownMenu = document.getElementById('dropdown-menu');
-
+    
     toggleBtn.addEventListener('click', function() {
         toggleBtn.classList.toggle('active');
         dropdownMenu.classList.toggle('show');
@@ -52,6 +61,7 @@ function updateUserSection() {
             dropdownMenu.classList.remove('show');
         }
     });
+    
 } else {
     userSection.innerHTML = `
         <a class="btn btn-light" 
