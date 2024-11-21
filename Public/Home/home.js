@@ -7,89 +7,83 @@ function updateUserSection() {
   const userSection = document.getElementById('user-section');
 
   if (loginStatus === 'loggedin' && user) {
-      userSection.innerHTML = `
-          <img src="/ImagesHome/pfp_final_1.png" 
-               alt="Profile Picture" 
-               id="pfp" 
-               style="width: 40px; 
-                      height: 40px; 
-                      margin-right: 1rem; 
-                      margin-left: 1.75rem; 
-                      border-radius: 50%; 
-                      cursor: pointer;" />
-          <a class="btn btn-light" 
-             href="/Sell/sell.html" 
-             role="button" 
-             style="font-size: 0.86rem; 
-                    width:6rem; 
-                    height: 2.2rem; 
-                    margin-right: 1rem;
-                    transform: rotate(-0.61deg); 
-                    transform-origin: 0 0; 
-                    background: white; 
-                    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
-                    border-radius: 40px; 
-                    backdrop-filter: blur(4px)">Sell</a>
-          <a class="btn btn-light" 
-             href="#" 
-             id="logout-btn"
-             role="button" 
-             style="font-size: 0.86rem; 
-                    width:6rem; 
-                    height: 2.2rem; 
-                    transform: rotate(-0.61deg); 
-                    transform-origin: 0 0; 
-                    background: white; 
-                    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
-                    border-radius: 40px; 
-                    backdrop-filter: blur(4px)">Logout</a>
-      `;
+    userSection.innerHTML = `
+        <div class="user-toggle-container">
+            <button class="toggle-btn" id="toggle-menu-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" class="toggle-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+            <div class="dropdown-menu" id="dropdown-menu">
+                <a href="/Sell/sell.html" class="dropdown-item">Sell</a>
+                <a href="#" class="dropdown-item" id="logout-btn">Logout</a>
+            </div>
+        </div>
+    `;
 
-      // Show custom alert
-      if(flag === '0') {
-          showAlert(`Welcome back, ${user}!`);
-      } else if(flag === '1') {
-          showAlert('Product Uploaded Successfully!');
-          localStorage.setItem('flag', '0');
-      }
+    // Show custom alert
+    if(flag === '0') {
+        showAlert(`Welcome back, ${user}!`);
+    } else if(flag === '1') {
+        showAlert('Product Uploaded Successfully!');
+        localStorage.setItem('flag', '0');
+    }
 
-      // Add profile click handler
-      document.getElementById('pfp').addEventListener('click', function() {
-          window.location.href = `/Profile/profile.html?status=loggedin&user=${user}`;
-      });
+    // Toggle Menu Button
+    const toggleBtn = document.getElementById('toggle-menu-btn');
+    const dropdownMenu = document.getElementById('dropdown-menu');
 
-      // Add logout handler
-      document.getElementById('logout-btn').addEventListener('click', function(e) {
-          e.preventDefault();
-          handleLogout();
-          window.location.href = 'home-live.html';
-      });
-  } else {
-      userSection.innerHTML = `
-          <a class="btn btn-light" 
-             href="/Login/login.html" 
-             role="button" 
-             style="font-size: 0.70rem; 
-                    height: 2rem; 
-                    width: 4.7rem; 
-                    transform: rotate(-0.61deg); 
-                    transform-origin: 0 0; 
-                    background: white; 
-                    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
-                    border-radius: 40px; 
-                    backdrop-filter: blur(4px)">Login In</a>
-      `;
-  }
+    toggleBtn.addEventListener('click', function() {
+        toggleBtn.classList.toggle('active');
+        dropdownMenu.classList.toggle('show');
+    });
+
+    // Logout Handler
+    document.getElementById('logout-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        handleLogout();
+        window.location.href = 'home-live.html';
+    });
+
+    // Close dropdown if clicked outside
+    document.addEventListener('click', function(event) {
+        if (!userSection.contains(event.target)) {
+            toggleBtn.classList.remove('active');
+            dropdownMenu.classList.remove('show');
+        }
+    });
+} else {
+    userSection.innerHTML = `
+        <a class="btn btn-light" 
+           href="/Login/login.html" 
+           role="button" 
+           style="font-size: 0.70rem; 
+                  height: 2rem; 
+                  width: 4.7rem; 
+                  transform: rotate(-0.61deg); 
+                  transform-origin: 0 0; 
+                  background: white; 
+                  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
+                  border-radius: 40px; 
+                  backdrop-filter: blur(4px)">Login In</a>
+    `;
+}
 }
 
-// Function to handle logout
+// Call the function when the window loads
+window.onload = updateUserSection;
+
+// Placeholder functions (you'll need to implement these)
+function showAlert(message) {
+// Implement your custom alert functionality
+alert(message);
+}
+
 function handleLogout() {
-  localStorage.removeItem('loginStatus');
-  localStorage.removeItem('user');
-  localStorage.removeItem('flag');
-  showAlert('Logged out successfully!');
+// Implement your logout logic here
+localStorage.removeItem('loginStatus');
+localStorage.removeItem('user');
 }
-
 // Initialize the page
 async function initializePage() {
   // Check URL parameters for initial load
